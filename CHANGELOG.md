@@ -2,6 +2,17 @@
 
 All notable changes to Addictive Writing are documented here.
 
+## [1.0.1] - 2026-07-12
+
+### Changed
+
+- Fully removed the model-judged evaluation, scores, rubrics, rankings, reports, and selected win claims.
+- Replaced that method with a manual side-by-side comparison of raw outputs.
+- Added 20 fully synthetic tasks spanning five source-size tiers and 20 writing categories.
+- Kept the visible user prompt byte-identical across conditions; the skill condition differs only by a separate skill input.
+- Added blank preference and notes columns so readers can make their own judgments.
+- Added a dependency-free app-server runner and complete reproduction instructions for `gpt-5.6-sol` at `ultra`.
+
 ## [1.0.0] - 2026-07-12
 
 ### Added
@@ -11,14 +22,6 @@ All notable changes to Addictive Writing are documented here.
 - Guidance for stakes, causal momentum, prediction, earned turns, payoffs, re-hooks, transitions, rhythm, and endings.
 - Truthfulness and safety constraints that protect facts, uncertainty, qualifications, intent, and voice.
 - Apache-2.0 license and Claude.ai-compatible release archive.
-- Reproducible Codex app-server evaluation runner, two frozen suites, raw outputs, blind judgments, deterministic checks, and an evaluation report.
-- Tested prose, script, and review examples, including both wins and known limitations.
 
-### Changed during evaluation
-
-- Calibrated claims in both directions so incomplete evidence is not turned into an unsupported absolute.
-- Required benchmarks for qualitative labels such as “heavy,” “significant,” or “practical.”
-- Required research limitations to use the source’s epistemic strength or a weaker one.
-- Prevented review findings from inventing hypothetical truth risks absent from the source.
-
+[1.0.1]: https://github.com/MarcoWorms/addictive-writing/releases/tag/v1.0.1
 [1.0.0]: https://github.com/MarcoWorms/addictive-writing/releases/tag/v1.0.0
