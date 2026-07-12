@@ -1,5 +1,7 @@
 # Addictive Writing
 
+[![skills.sh](https://skills.sh/b/marcoworms/addictive-writing)](https://skills.sh/marcoworms/addictive-writing)
+
 **Earned-attention storytelling for AI agents—without clickbait, deception, or factual distortion.**
 
 Addictive Writing is an open Agent Skill for drafting, rewriting, outlining, punching up, and reviewing prose and scripts. It focuses on clear stakes, causal momentum, meaningful questions, earned turns, payoffs, re-hooks, rhythm, and conversational tone while protecting facts, qualifications, intent, and voice.
