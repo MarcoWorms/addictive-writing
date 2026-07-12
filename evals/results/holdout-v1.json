@@ -1,0 +1,2407 @@
+{
+  "schemaVersion": 1,
+  "runId": "eval-20260712184908-d2824693",
+  "startedAt": "2026-07-12T18:49:08.052Z",
+  "completedAt": "2026-07-12T19:15:58.695Z",
+  "protocol": {
+    "name": "holdout-v1-four-case-paired-evaluation",
+    "sampleCountPerCondition": 1,
+    "judgeCountPerPair": 4,
+    "conditions": [
+      "strong_prompt_baseline",
+      "same_prompt_plus_addictive_writing_skill"
+    ],
+    "predeclaredSuccessCriteria": {
+      "positiveCases": "The skill condition receives more blind preference votes than the baseline, passes every hard factual and task-constraint check, and does not perform worse than the baseline on any hard check.",
+      "negativeControl": "The skill condition fixes every seeded grammar error without unauthorized changes to meaning or structure and shows no material regression from the baseline.",
+      "suite": "All three positive cases and the negative control must pass their case criteria for the evaluation to support the headline claim."
+    },
+    "freezePolicy": "This holdout was written after the development-suite revision and frozen before any holdout output was generated. Do not change cases, rubrics, checks, or success criteria after viewing outputs. Any change requires a new result set and protocol version."
+  },
+  "environment": {
+    "codexVersion": "codex-cli 0.144.0-alpha.4",
+    "appServerUserAgent": "addictive_writing_eval/0.144.0-alpha.4 (Mac OS 26.5.0; arm64) unknown (addictive_writing_eval; 1.0.0)",
+    "nodeVersion": "v24.12.0",
+    "platform": "darwin",
+    "isolation": "Fresh temporary HOME and CODEX_HOME containing only a symlink to file-based auth; empty temporary cwd; minimal environment; read-only threads; shell/apps/web disabled; turns rejected on tool items or model reroutes."
+  },
+  "requestedConfiguration": {
+    "model": "gpt-5.6-sol",
+    "effort": "ultra"
+  },
+  "verifiedCatalogEntry": {
+    "id": "gpt-5.6-sol",
+    "displayName": "GPT-5.6-Sol",
+    "description": "Latest frontier agentic coding model.",
+    "supportedReasoningEfforts": [
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max",
+      "ultra"
+    ]
+  },
+  "frozenInputs": {
+    "skillSha256": "a8b9162e85d8cae66eabe687c1ac6f51541df10a95a8216623d70e96c45f5b99",
+    "casesSha256": "a561d7c095d4121c2ac820d4241510669520de3f916d9ca5eb2c5bc9829b8bc7",
+    "runnerSha256": "9c768f4d8f7ec75993f4517196e8ff5b0a06f7eea4bb81880ad9cbfa9ca76d9d",
+    "caseCount": 4,
+    "judgesPerPair": 4
+  },
+  "cases": {
+    "incident-case-study": {
+      "title": "Engineering incident case-study opening",
+      "type": "positive",
+      "task": "Rewrite the draft below as a 130–170 word opening for an engineering case study. Make it engaging and causally clear while keeping a restrained technical voice. Preserve every fact, distinguish the confirmed mechanism from mere timing, and do not invent customer, revenue, or business impact. Return only the finished opening.",
+      "materials": "SOURCE FACTS\n- On June 18 at 9:00, the team deployed a cache change intended to reduce median catalog load time.\n- By 9:30, median catalog load time had moved from 2.4 seconds to 1.5 seconds.\n- During the same interval, the checkout error rate moved from 0.8% to 3.1%.\n- Logs and a reproduction confirmed that some cached pages served expired checkout tokens.\n- The team rolled back the change at 10:20.\n- By 10:35, checkout errors were at 0.9% and median catalog load time was 2.3 seconds.\n- The team has no estimate of customer, revenue, or other business impact.\n\nDRAFT\nOn June 18 we deployed a cache change at 9:00. It was meant to improve catalog speed. By 9:30 median load time went from 2.4 seconds to 1.5 seconds. Checkout errors also went from 0.8% to 3.1%. We investigated. Logs and reproduction confirmed some cached pages served expired checkout tokens. We rolled back at 10:20. By 10:35 errors were 0.9% and load time was 2.3 seconds. We do not have an estimate of customer, revenue, or business impact.",
+      "objectiveChecks": [
+        {
+          "id": "word-range",
+          "hard": true,
+          "description": "The finished opening is 130–170 words."
+        },
+        {
+          "id": "deployment-and-metrics",
+          "hard": true,
+          "description": "It preserves the deployment time and the before/after load-time and checkout-error metrics through 9:30."
+        },
+        {
+          "id": "confirmed-mechanism",
+          "hard": true,
+          "description": "It accurately distinguishes the confirmed expired-token mechanism from mere temporal association."
+        },
+        {
+          "id": "rollback-and-recovery",
+          "hard": true,
+          "description": "It preserves the 10:20 rollback and the 10:35 error-rate and load-time measurements."
+        },
+        {
+          "id": "no-impact-invention",
+          "hard": true,
+          "description": "It states or preserves that customer, revenue, and business impact were not estimated and invents none."
+        }
+      ],
+      "promptHash": "a5ca4337d6b466f14bca15291d523240cf1e23dc291084059252c0e93dfbfbae",
+      "generationOrder": [
+        "baseline",
+        "skill"
+      ],
+      "generation": {
+        "baseline": {
+          "condition": "baseline",
+          "threadRef": "thread-8491c8a2fb4a",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "a5ca4337d6b466f14bca15291d523240cf1e23dc291084059252c0e93dfbfbae",
+          "skillInputSent": false,
+          "output": "At 9:00 on June 18, we deployed a cache change intended to reduce median catalog load time. Within 30 minutes, that metric moved from 2.4 seconds to 1.5 seconds. Over the same interval, however, the checkout error rate moved from 0.8% to 3.1%. The timing made the deployment an immediate focus, but it did not by itself establish a failure mechanism. Logs and a reproduction supplied the confirmed finding: some cached pages were serving expired checkout tokens.\n\nWe rolled back the cache change at 10:20. By 10:35, checkout errors had fallen to 0.9%, while median catalog load time had risen to 2.3 seconds. The incident therefore presented two kinds of evidence: performance and error-rate changes that coincided with the deployment and rollback, and a specific checkout failure mechanism verified through logs and reproduction. This case study examines that distinction and the technical tradeoffs exposed by the cache change. We have no estimate of customer, revenue, or other business impact.",
+          "wordCount": 162,
+          "deterministicChecks": {
+            "word-range": {
+              "pass": true,
+              "evidence": "162 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        "skill": {
+          "condition": "skill",
+          "threadRef": "thread-1b4b97ca5c6b",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "a5ca4337d6b466f14bca15291d523240cf1e23dc291084059252c0e93dfbfbae",
+          "skillInputSent": true,
+          "output": "At 9:00 on June 18, we deployed a cache change intended to reduce median catalog load time. By 9:30, the median had fallen from 2.4 seconds to 1.5 seconds. Over that same interval, however, the checkout error rate rose from 0.8% to 3.1%. The shared timing suggested a connection, but timing alone did not establish why checkout was failing.\n\nLogs and a reproduction confirmed the mechanism: some cached pages were serving expired checkout tokens. At 10:20, we rolled back the change. By 10:35, the checkout error rate was at 0.9%, while median catalog load time had moved back to 2.3 seconds. The post-rollback movement was consistent with the deployment timeline; the expired-token behavior was the part confirmed directly by evidence. We have no estimate of customer, revenue, or other business impact.",
+          "wordCount": 135,
+          "deterministicChecks": {
+            "word-range": {
+              "pass": true,
+              "evidence": "135 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      },
+      "judges": [
+        {
+          "judge": 1,
+          "threadRef": "thread-e28af9d98ecf",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "11fab4023ef2adcd06f283418324a50445b843ba0a8e7e7d6f1bec24fcaf0956",
+          "judgment": {
+            "caseId": "incident-case-study",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 9,
+              "factualFidelity": 9,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "131 words."
+              },
+              {
+                "checkId": "deployment-and-metrics",
+                "pass": true,
+                "evidence": "States the June 18 9:00 deployment and the 9:30 changes from 2.4 to 1.5 seconds and 0.8% to 3.1%."
+              },
+              {
+                "checkId": "confirmed-mechanism",
+                "pass": true,
+                "evidence": "Explicitly separates temporal association from the logs-and-reproduction-confirmed expired-token mechanism."
+              },
+              {
+                "checkId": "rollback-and-recovery",
+                "pass": true,
+                "evidence": "Preserves the 10:20 rollback and both 10:35 measurements: 0.9% errors and 2.3-second median load time."
+              },
+              {
+                "checkId": "no-impact-invention",
+                "pass": true,
+                "evidence": "States that no customer, revenue, or other business-impact estimate exists and invents none."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "159 words."
+              },
+              {
+                "checkId": "deployment-and-metrics",
+                "pass": true,
+                "evidence": "States the June 18 9:00 deployment; “within 30 minutes” preserves the 9:30 endpoint and both metric changes."
+              },
+              {
+                "checkId": "confirmed-mechanism",
+                "pass": true,
+                "evidence": "Clearly contrasts coincident timing with the expired-token mechanism verified through logs and reproduction."
+              },
+              {
+                "checkId": "rollback-and-recovery",
+                "pass": true,
+                "evidence": "Preserves the 10:20 rollback and the 10:35 values of 0.9% errors and 2.3-second load time."
+              },
+              {
+                "checkId": "no-impact-invention",
+                "pass": true,
+                "evidence": "Explicitly disclaims any estimate of customer, revenue, or other business impact."
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.72,
+            "rationale": "Both outputs pass every hard check and maintain a restrained, technically credible chronology. A has the edge because it is more compressed, retains the explicit 9:30 timestamp, and avoids B’s mildly unsupported narrative additions that the deployment became an “immediate focus” and exposed “technical tradeoffs.” B’s evidence taxonomy is strong, but its extra framing is less faithful to the frozen facts."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 2,
+          "threadRef": "thread-7e291350d0c0",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "967689fede22f04968e88330ea461a7439dbef79c5e7980ec5dbf0d2ffca199f",
+          "judgment": {
+            "caseId": "incident-case-study",
+            "scoresA": {
+              "taskFulfillment": 9,
+              "factualFidelity": 9,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "159 words."
+              },
+              {
+                "checkId": "deployment-and-metrics",
+                "pass": true,
+                "evidence": "States the June 18 9:00 deployment and reports 2.4s→1.5s and 0.8%→3.1% within the ensuing 30-minute interval."
+              },
+              {
+                "checkId": "confirmed-mechanism",
+                "pass": true,
+                "evidence": "Explicitly separates temporal coincidence from the logs-and-reproduction finding that cached pages served expired checkout tokens."
+              },
+              {
+                "checkId": "rollback-and-recovery",
+                "pass": true,
+                "evidence": "Preserves the 10:20 rollback and the 10:35 measurements of 0.9% errors and 2.3s median load time."
+              },
+              {
+                "checkId": "no-impact-invention",
+                "pass": true,
+                "evidence": "States that no customer, revenue, or other business-impact estimate exists and invents none."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "130 words."
+              },
+              {
+                "checkId": "deployment-and-metrics",
+                "pass": true,
+                "evidence": "Explicitly preserves June 18 at 9:00, the 9:30 endpoint, 2.4s→1.5s load time, and 0.8%→3.1% checkout errors."
+              },
+              {
+                "checkId": "confirmed-mechanism",
+                "pass": true,
+                "evidence": "Says timing only suggested a connection, while logs and reproduction directly confirmed expired checkout tokens."
+              },
+              {
+                "checkId": "rollback-and-recovery",
+                "pass": true,
+                "evidence": "Preserves the 10:20 rollback and both 10:35 measurements exactly."
+              },
+              {
+                "checkId": "no-impact-invention",
+                "pass": true,
+                "evidence": "Explicitly disclaims any estimate of customer, revenue, or other business impact."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.96,
+            "rationale": "Both outputs pass every hard check and maintain a restrained technical voice. B is preferable because it preserves the explicit 9:30 timestamp, compresses the causal distinction more cleanly, and avoids A’s somewhat unnecessary case-study preview and abstract restatement of the evidence."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 3,
+          "threadRef": "thread-7f0c1b834fc3",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "11fab4023ef2adcd06f283418324a50445b843ba0a8e7e7d6f1bec24fcaf0956",
+          "judgment": {
+            "caseId": "incident-case-study",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 9,
+              "factualFidelity": 9,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "131 words, within the required 130–170 range."
+              },
+              {
+                "checkId": "deployment-and-metrics",
+                "pass": true,
+                "evidence": "Preserves June 18 at 9:00 and the 9:30 changes from 2.4 to 1.5 seconds and 0.8% to 3.1%."
+              },
+              {
+                "checkId": "confirmed-mechanism",
+                "pass": true,
+                "evidence": "Explicitly separates suggestive timing from the logs-and-reproduction-confirmed expired-token mechanism."
+              },
+              {
+                "checkId": "rollback-and-recovery",
+                "pass": true,
+                "evidence": "Preserves the 10:20 rollback and both 10:35 measurements: 0.9% errors and 2.3-second load time."
+              },
+              {
+                "checkId": "no-impact-invention",
+                "pass": true,
+                "evidence": "States that no customer, revenue, or other business-impact estimate exists and invents none."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "159 words, within the required 130–170 range."
+              },
+              {
+                "checkId": "deployment-and-metrics",
+                "pass": true,
+                "evidence": "Preserves the 9:00 June 18 deployment; “within 30 minutes” equivalently frames the 9:30 metrics of 2.4 to 1.5 seconds and 0.8% to 3.1%."
+              },
+              {
+                "checkId": "confirmed-mechanism",
+                "pass": true,
+                "evidence": "Clearly distinguishes temporal association from the expired-token finding confirmed through logs and reproduction."
+              },
+              {
+                "checkId": "rollback-and-recovery",
+                "pass": true,
+                "evidence": "Preserves the 10:20 rollback and the 10:35 values of 0.9% and 2.3 seconds."
+              },
+              {
+                "checkId": "no-impact-invention",
+                "pass": true,
+                "evidence": "Explicitly states that customer, revenue, and other business impact were not estimated."
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.72,
+            "rationale": "Both outputs pass every hard check and maintain a restrained technical voice. A is preferable because it is more compressed, retains the explicit 9:30 framing, and draws the evidentiary boundary with exceptional precision. B is strong but more repetitive and adds mildly inferential framing—an “immediate focus” and “technical tradeoffs exposed”—that is not directly established by the frozen facts."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 4,
+          "threadRef": "thread-e4012f720133",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "967689fede22f04968e88330ea461a7439dbef79c5e7980ec5dbf0d2ffca199f",
+          "judgment": {
+            "caseId": "incident-case-study",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "159 words."
+              },
+              {
+                "checkId": "deployment-and-metrics",
+                "pass": true,
+                "evidence": "Preserves the June 18 9:00 deployment and states that within 30 minutes load time moved from 2.4s to 1.5s while checkout errors moved from 0.8% to 3.1%."
+              },
+              {
+                "checkId": "confirmed-mechanism",
+                "pass": true,
+                "evidence": "Explicitly separates timing from causation and attributes the expired-token finding to logs and reproduction."
+              },
+              {
+                "checkId": "rollback-and-recovery",
+                "pass": true,
+                "evidence": "Preserves the 10:20 rollback and the 10:35 measurements of 0.9% and 2.3s."
+              },
+              {
+                "checkId": "no-impact-invention",
+                "pass": true,
+                "evidence": "States that customer, revenue, and other business impact were not estimated; invents no impact."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "131 words."
+              },
+              {
+                "checkId": "deployment-and-metrics",
+                "pass": true,
+                "evidence": "Preserves the June 18 9:00 deployment, explicit 9:30 checkpoint, and both before/after metric pairs."
+              },
+              {
+                "checkId": "confirmed-mechanism",
+                "pass": true,
+                "evidence": "Clearly says shared timing only suggested a connection, while logs and reproduction confirmed expired checkout tokens."
+              },
+              {
+                "checkId": "rollback-and-recovery",
+                "pass": true,
+                "evidence": "Preserves the 10:20 rollback and the 10:35 measurements of 0.9% and 2.3s."
+              },
+              {
+                "checkId": "no-impact-invention",
+                "pass": true,
+                "evidence": "States that customer, revenue, and other business impact were not estimated; invents no impact."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.96,
+            "rationale": "Both outputs satisfy every hard check and maintain a restrained technical voice. B is preferable because it preserves the 9:30 timestamp explicitly and delivers the same causal distinction more compactly. A is accurate but adds a somewhat generic case-study framing sentence and repeats the evidence distinction, making it less compressed."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      ]
+    },
+    "fiction-earned-reveal": {
+      "title": "Fiction scene with an earned reveal",
+      "type": "positive",
+      "task": "Rewrite the draft below as a 180–230 word scene in close third-person from Eli’s point of view. Strengthen tension, prediction, and the earned reveal while preserving every plot fact. Do not add characters, dialogue, backstory, new plot actions, or new explanatory mechanisms. Non-plot sensory description is allowed. Return only the finished scene.",
+      "materials": "DRAFT\nEli entered the rehearsal room. The locked glass display frame was intact, but the signed ace was missing. A blank card lay on the floor beneath the frame. The lower corner of the frame’s backing was loose. Eli remembered the master holding the signed ace near the lamp during rehearsal and watching its signature fade. The lamp was still lit. Eli held the blank card near it, and the signature returned. The ace had slipped through the loose backing. It had not been stolen.",
+      "objectiveChecks": [
+        {
+          "id": "word-range",
+          "hard": true,
+          "description": "The finished scene is 180–230 words."
+        },
+        {
+          "id": "frame-card-clues",
+          "hard": true,
+          "description": "It preserves the intact locked frame, missing signed ace, blank card below it, and loose lower backing corner."
+        },
+        {
+          "id": "memory-setup",
+          "hard": true,
+          "description": "It preserves Eli’s memory that the master held the signed ace near the lamp and its signature faded."
+        },
+        {
+          "id": "reveal-action",
+          "hard": true,
+          "description": "It preserves that the lamp is lit, Eli holds the blank card near it, and the signature returns."
+        },
+        {
+          "id": "earned-conclusion",
+          "hard": true,
+          "description": "It concludes from the clues that the ace slipped through the backing and was not stolen, without a new mechanism or plot event."
+        },
+        {
+          "id": "close-pov-no-invention",
+          "hard": true,
+          "description": "It stays in close third-person Eli and adds no character, dialogue, backstory, or new plot action."
+        }
+      ],
+      "promptHash": "f453eb99178a035dd53c553a277302eda1b0fc061a8e394840004ab3701723b0",
+      "generationOrder": [
+        "skill",
+        "baseline"
+      ],
+      "generation": {
+        "skill": {
+          "condition": "skill",
+          "threadRef": "thread-4e9e1cb806fc",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "f453eb99178a035dd53c553a277302eda1b0fc061a8e394840004ab3701723b0",
+          "skillInputSent": true,
+          "output": "Eli entered the rehearsal room, and the glow from the lamp met him before the silence did.\n\nThe locked glass display frame hung where it should, its pane uncracked, its edges undisturbed. Yet the signed ace was gone.\n\nBeneath it, a blank card lay on the floor. The sight tightened something in his chest. An intact lock, an empty frame—every detail pointed toward a theft that should have been impossible.\n\nThen he saw the backing. At its lower corner, one edge sat loose, leaving the slightest dark gap.\n\nThe lamp still burned beside the rehearsal space, steady and warm. Eli remembered the master holding the signed ace close to that light during rehearsal. Under the glow, the signature had thinned, then faded until the card appeared blank.\n\nHis gaze returned to the card beneath the frame.\n\nBlank. Directly below the loosened corner.\n\nIf it was the ace, the lamp would tell him.\n\nEli held the blank card near the light. Faint strokes surfaced across its face, gathering darkness, joining into the vanished signature.\n\nThe tension broke cleanly. The ace had slipped through the loose backing and fallen below. No hand had taken it.\n\nIt had not been stolen.",
+          "wordCount": 199,
+          "deterministicChecks": {
+            "word-range": {
+              "pass": true,
+              "evidence": "199 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        "baseline": {
+          "condition": "baseline",
+          "threadRef": "thread-790c0381f6cf",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "f453eb99178a035dd53c553a277302eda1b0fc061a8e394840004ab3701723b0",
+          "skillInputSent": false,
+          "output": "Eli entered the rehearsal room and stopped. The locked glass display frame was intact: glass unbroken, lock undisturbed. Yet the signed ace was gone.\n\nFor one breath, absence seemed louder than any alarm.\n\nThen he saw the card on the floor beneath the frame. Its face was blank, pale against the boards. Above it, the lower corner of the frame’s backing sat loose. The two details tugged against the obvious conclusion. If someone had taken the ace, why leave a blank card there? And why was the frame untouched?\n\nThe lamp still burned beside the rehearsal space, its steady glow recalling another impossible moment. During rehearsal, the master had held the signed ace near that lamp, and Eli had watched its signature fade.\n\nHis attention fixed on the blank card. It might only look blank.\n\nHe lifted it and held it near the lamp. For a taut instant, the white face offered nothing. Then ink returned across it, stroke by stroke, until the vanished signature stood unmistakably before him.\n\nThe blank card was the signed ace.\n\nNow the loose backing resolved the rest. The ace had slipped through the lower corner and fallen beneath the locked frame. No one had breached the display. The ace had not been stolen.",
+          "wordCount": 209,
+          "deterministicChecks": {
+            "word-range": {
+              "pass": true,
+              "evidence": "209 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      },
+      "judges": [
+        {
+          "judge": 1,
+          "threadRef": "thread-08fbcaf36dbd",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "9cc0c266d5d52ed1a342c7c1c6ad1eb167ae3eeb352e045dddba3e4594699880",
+          "judgment": {
+            "caseId": "fiction-earned-reveal",
+            "scoresA": {
+              "taskFulfillment": 9,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 8,
+              "constraintCompliance": 9,
+              "voicePreservation": 8
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "209 words."
+              },
+              {
+                "checkId": "frame-card-clues",
+                "pass": true,
+                "evidence": "Preserves the intact locked frame, missing ace, blank card beneath it, and loose lower backing corner."
+              },
+              {
+                "checkId": "memory-setup",
+                "pass": true,
+                "evidence": "Eli recalls the master holding the signed ace near the lamp and watching its signature fade."
+              },
+              {
+                "checkId": "reveal-action",
+                "pass": true,
+                "evidence": "The lamp remains lit; Eli holds the blank card near it and the signature returns."
+              },
+              {
+                "checkId": "earned-conclusion",
+                "pass": true,
+                "evidence": "The restored signature and loose backing lead directly to the conclusion that the ace fell and was not stolen."
+              },
+              {
+                "checkId": "close-pov-no-invention",
+                "pass": true,
+                "evidence": "Stays close to Eli and adds no character, dialogue, backstory, mechanism, or material new plot event."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "199 words."
+              },
+              {
+                "checkId": "frame-card-clues",
+                "pass": true,
+                "evidence": "Preserves the locked, undisturbed frame, missing ace, blank card below it, and loose lower backing corner."
+              },
+              {
+                "checkId": "memory-setup",
+                "pass": true,
+                "evidence": "Eli remembers the master holding the ace near the lamp as its signature faded."
+              },
+              {
+                "checkId": "reveal-action",
+                "pass": true,
+                "evidence": "The lamp still burns; Eli holds the blank card near it and the signature reappears."
+              },
+              {
+                "checkId": "earned-conclusion",
+                "pass": true,
+                "evidence": "The spatial clues and lamp test support the conclusion that the ace slipped through the backing and was not taken."
+              },
+              {
+                "checkId": "close-pov-no-invention",
+                "pass": true,
+                "evidence": "Maintains Eli’s close perspective without adding characters, dialogue, backstory, mechanisms, or plot events."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.78,
+            "rationale": "Both outputs pass every hard check and stage a fair reveal. B is stronger because it gives Eli an explicit, testable prediction—“If it was the ace, the lamp would tell him”—then delivers the reveal with a tighter clue-to-test-to-conclusion rhythm. A remains accurate and effective, but its rhetorical questions, extra stopping/lifting beats, and repeated final explanation are slightly less restrained."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 2,
+          "threadRef": "thread-504a3f8775cb",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "a66cfe75f53822f9ad4bec74d59905a2fcbcf34f5972043b0f6c127973c9f71a",
+          "judgment": {
+            "caseId": "fiction-earned-reveal",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 8
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "199 words, within the required 180–230."
+              },
+              {
+                "checkId": "frame-card-clues",
+                "pass": true,
+                "evidence": "Preserves the locked, undisturbed frame, missing ace, blank card beneath it, and loose lower backing corner."
+              },
+              {
+                "checkId": "memory-setup",
+                "pass": true,
+                "evidence": "Eli remembers the master holding the signed ace near the lamp during rehearsal as its signature faded."
+              },
+              {
+                "checkId": "reveal-action",
+                "pass": true,
+                "evidence": "The lamp remains lit; Eli holds the blank card near it and the signature resurfaces."
+              },
+              {
+                "checkId": "earned-conclusion",
+                "pass": true,
+                "evidence": "The loose backing and card position support the conclusion that the ace fell through and was not stolen."
+              },
+              {
+                "checkId": "close-pov-no-invention",
+                "pass": true,
+                "evidence": "Remains close to Eli and adds no substantive character, dialogue, backstory, mechanism, or plot event."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "209 words, within the required 180–230."
+              },
+              {
+                "checkId": "frame-card-clues",
+                "pass": true,
+                "evidence": "Explicitly preserves the intact locked frame, absent signed ace, blank card below, and loose lower backing corner."
+              },
+              {
+                "checkId": "memory-setup",
+                "pass": true,
+                "evidence": "Explicitly states that Eli watched the signature fade when the master held the ace near the lamp during rehearsal."
+              },
+              {
+                "checkId": "reveal-action",
+                "pass": true,
+                "evidence": "The lamp is still burning; Eli holds the card near it and the ink returns."
+              },
+              {
+                "checkId": "earned-conclusion",
+                "pass": true,
+                "evidence": "The revealed ace and loose backing lead directly to the conclusion that it slipped out and was not stolen."
+              },
+              {
+                "checkId": "close-pov-no-invention",
+                "pass": true,
+                "evidence": "Uses close third-person Eli throughout without added characters, dialogue, backstory, mechanisms, or substantive plot actions."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.78,
+            "rationale": "Both outputs pass every hard check and stage a fair prediction before the reveal. B has the slightly stronger attention sequence: Eli tests the theft hypothesis against the intact frame, blank card, and loose backing; recalls the lamp; predicts that the card only appears blank; then verifies it and resolves the backing clue. A is effective but somewhat more decorative and repeats its final conclusion more emphatically, making it marginally less restrained and less faithful to the draft’s direct voice."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 3,
+          "threadRef": "thread-8d94c3142b58",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "9cc0c266d5d52ed1a342c7c1c6ad1eb167ae3eeb352e045dddba3e4594699880",
+          "judgment": {
+            "caseId": "fiction-earned-reveal",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 9,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "208 words."
+              },
+              {
+                "checkId": "frame-card-clues",
+                "pass": true,
+                "evidence": "Preserves the intact locked frame, missing signed ace, blank card beneath it, and loose lower backing corner."
+              },
+              {
+                "checkId": "memory-setup",
+                "pass": true,
+                "evidence": "Eli recalls the master holding the ace near the lamp and watching its signature fade."
+              },
+              {
+                "checkId": "reveal-action",
+                "pass": true,
+                "evidence": "The lamp remains lit; Eli holds the blank card near it and the signature returns."
+              },
+              {
+                "checkId": "earned-conclusion",
+                "pass": true,
+                "evidence": "The loose backing and fallen card support the stated conclusion that the ace slipped out and was not stolen."
+              },
+              {
+                "checkId": "close-pov-no-invention",
+                "pass": true,
+                "evidence": "Stays with Eli’s perceptions and reasoning, with no dialogue, backstory, new character, or material new mechanism."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "199 words."
+              },
+              {
+                "checkId": "frame-card-clues",
+                "pass": true,
+                "evidence": "Preserves the intact locked frame, absent signed ace, blank card below it, and loose lower backing corner."
+              },
+              {
+                "checkId": "memory-setup",
+                "pass": true,
+                "evidence": "Eli remembers the master holding the signed ace near the lamp as its signature faded."
+              },
+              {
+                "checkId": "reveal-action",
+                "pass": true,
+                "evidence": "The lamp is still burning; Eli holds the blank card near it and the signature resurfaces."
+              },
+              {
+                "checkId": "earned-conclusion",
+                "pass": true,
+                "evidence": "Concludes directly that the ace fell through the loose backing and was not stolen."
+              },
+              {
+                "checkId": "close-pov-no-invention",
+                "pass": true,
+                "evidence": "Maintains close third-person through Eli and adds no dialogue, character, backstory, or new plot mechanism."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.78,
+            "rationale": "Both satisfy every hard check and stage a fair clue-to-test-to-reveal sequence. B is marginally stronger because “If it was the ace, the lamp would tell him” makes the prediction explicit immediately before the test, sharpening the payoff with cleaner rhythm and restraint. Its statement that the frame “hung where it should” is a slight unsupported embellishment, but not a material plot invention. A remains excellent, though its rhetorical questions and repeated explanatory conclusions make the ending slightly less economical."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 4,
+          "threadRef": "thread-d36a59af3980",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "a66cfe75f53822f9ad4bec74d59905a2fcbcf34f5972043b0f6c127973c9f71a",
+          "judgment": {
+            "caseId": "fiction-earned-reveal",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 8
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "199 words."
+              },
+              {
+                "checkId": "frame-card-clues",
+                "pass": true,
+                "evidence": "Preserves the locked, intact frame, missing signed ace, blank card below, and loose lower backing corner."
+              },
+              {
+                "checkId": "memory-setup",
+                "pass": true,
+                "evidence": "Eli remembers the master holding the ace near the lamp during rehearsal and its signature fading."
+              },
+              {
+                "checkId": "reveal-action",
+                "pass": true,
+                "evidence": "The lamp remains lit; Eli holds the blank card near its light, and the signature resurfaces."
+              },
+              {
+                "checkId": "earned-conclusion",
+                "pass": true,
+                "evidence": "The card’s position, loose backing, and restored signature lead directly to the conclusion that it fell and was not stolen."
+              },
+              {
+                "checkId": "close-pov-no-invention",
+                "pass": true,
+                "evidence": "Stays close to Eli’s perceptions and reasoning, with no added character, dialogue, backstory, mechanism, or substantive plot event."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "209 words."
+              },
+              {
+                "checkId": "frame-card-clues",
+                "pass": true,
+                "evidence": "Explicitly preserves the intact locked frame, absent signed ace, blank card beneath it, and loose lower backing corner."
+              },
+              {
+                "checkId": "memory-setup",
+                "pass": true,
+                "evidence": "Explicitly states that Eli watched the ace’s signature fade near the lamp during rehearsal."
+              },
+              {
+                "checkId": "reveal-action",
+                "pass": true,
+                "evidence": "The lamp is still burning; Eli holds the card near it, and the signature returns stroke by stroke."
+              },
+              {
+                "checkId": "earned-conclusion",
+                "pass": true,
+                "evidence": "The restored signature identifies the card, after which the loose backing explains its fall and rules out theft."
+              },
+              {
+                "checkId": "close-pov-no-invention",
+                "pass": true,
+                "evidence": "Maintains close third-person Eli and adds only incidental movement and sensory detail, without prohibited invention."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.72,
+            "rationale": "Both outputs pass every hard check and stage a fair reveal. B is marginally stronger because its clue-to-question-to-hypothesis-to-test-to-deduction sequence is exceptionally clear and restrained. A is also effective, but its opening flourishes and repeated final denial are slightly less economical than B’s causal progression."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      ]
+    },
+    "evidence-memo-review": {
+      "title": "Evidence-bound executive memo review",
+      "type": "positive",
+      "task": "Review the draft below without rewriting it. In 220 words or fewer, give: (1) a one-sentence reader contract; (2) exactly three prioritized findings, each citing an exact phrase and naming the smallest effective fix; and (3) a one-sentence boundary on what the evidence supports. Use only the draft and flag actual risks rather than hypothetical ones.",
+      "materials": "DRAFT\nThe new routing system transformed support. After it launched, median first-response time fell from 11 hours to 8 hours over the next four weeks. This proves the routing logic made the team faster. Customers were much happier too: satisfaction moved from 4.1 to 4.2. Ticket volume fell 22% during the period, and two contractors joined in week two. We did not run a controlled analysis. The satisfaction survey response rate was 18%. In conclusion, the rollout was an unqualified success that every support team should copy.",
+      "objectiveChecks": [
+        {
+          "id": "no-rewrite",
+          "hard": true,
+          "description": "It reviews and prescribes fixes without presenting a rewritten draft."
+        },
+        {
+          "id": "word-limit",
+          "hard": true,
+          "description": "It stays at or below 220 words."
+        },
+        {
+          "id": "requested-structure",
+          "hard": true,
+          "description": "It provides the reader contract, exactly three prioritized findings with exact phrases and smallest fixes, and one evidence boundary."
+        },
+        {
+          "id": "causation-confounds",
+          "hard": true,
+          "description": "It flags the unsupported causal claim and the actual confounds of lower ticket volume, added contractors, and no controlled analysis."
+        },
+        {
+          "id": "satisfaction-calibration",
+          "hard": true,
+          "description": "It calibrates the 4.1-to-4.2 satisfaction change and 18% response rate without inventing a benchmark or declaring no effect."
+        },
+        {
+          "id": "scope-overreach",
+          "hard": true,
+          "description": "It flags 'unqualified success' and 'every support team should copy' as unsupported scope or generalization."
+        }
+      ],
+      "promptHash": "1d57093429301832976393df54a53bf9c43882c393ee9f222aa4723ade65124f",
+      "generationOrder": [
+        "baseline",
+        "skill"
+      ],
+      "generation": {
+        "baseline": {
+          "condition": "baseline",
+          "threadRef": "thread-84aee8f4be81",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "1d57093429301832976393df54a53bf9c43882c393ee9f222aa4723ade65124f",
+          "skillInputSent": false,
+          "output": "Reader contract: This piece assesses whether four weeks of post-launch support metrics justify calling the routing rollout successful.\n\n1. “This proves the routing logic made the team faster” makes an unsupported causal claim given the 22% volume decline, added contractors, and lack of controlled analysis; smallest fix: replace “proves” with “suggests” and acknowledge the confounders.\n\n2. “An unqualified success that every support team should copy” overgeneralizes from one uncontrolled rollout; smallest fix: remove “unqualified” and the recommendation to other teams.\n\n3. “Customers were much happier” overstates a 4.1-to-4.2 change from a survey with an 18% response rate; smallest fix: describe it as a slight increase among respondents.\n\nBoundary: The evidence supports only that response time, satisfaction, staffing, and ticket volume changed during the four weeks after launch—not that routing caused those changes or will work elsewhere.",
+          "wordCount": 137,
+          "deterministicChecks": {
+            "word-limit": {
+              "pass": true,
+              "evidence": "137 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        "skill": {
+          "condition": "skill",
+          "threadRef": "thread-ec1e990ce947",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "1d57093429301832976393df54a53bf9c43882c393ee9f222aa4723ade65124f",
+          "skillInputSent": true,
+          "output": "**Reader contract:** This review assesses whether the reported four-week results justify the draft’s causal, satisfaction, and broader adoption claims.\n\n1. **Causality:** “This proves the routing logic made the team faster” ignores the 22% ticket-volume decline, two added contractors, and lack of controlled analysis; replace “proves” with “is consistent with.”\n\n2. **Customer sentiment:** “Customers were much happier too” overstates a 0.1-point increase from a survey with an 18% response rate; change “much happier” to “reported slightly higher satisfaction among respondents.”\n\n3. **Generalization:** “an unqualified success that every support team should copy” contradicts the draft’s stated limitations and extends one team’s short-term result to all teams; remove “unqualified” and “every support team should copy.”\n\n**Evidence boundary:** The evidence supports a four-week association between the rollout and improved observed metrics, but not routing-specific causation, broad customer happiness, or transferability to other support teams.",
+          "wordCount": 140,
+          "deterministicChecks": {
+            "word-limit": {
+              "pass": true,
+              "evidence": "140 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      },
+      "judges": [
+        {
+          "judge": 1,
+          "threadRef": "thread-54daf55720f2",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "64a4c6a8e295ca53a05e5680ef7963d691a617c3a7e30f2d017a745c17f3e4c4",
+          "judgment": {
+            "caseId": "evidence-memo-review",
+            "scoresA": {
+              "taskFulfillment": 9,
+              "factualFidelity": 9,
+              "attentionStructure": 9,
+              "proseQuality": 8,
+              "constraintCompliance": 9,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 9,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "It reviews claims and proposes localized edits without supplying a rewritten draft."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is clearly below 220 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "It has a one-sentence contract, exactly three numbered findings with quotations and fixes, and a one-sentence boundary."
+              },
+              {
+                "checkId": "causation-confounds",
+                "pass": true,
+                "evidence": "Finding 1 identifies the 22% volume decline, two contractors, and absence of controlled analysis."
+              },
+              {
+                "checkId": "satisfaction-calibration",
+                "pass": true,
+                "evidence": "It characterizes 4.1 to 4.2 as a 0.1-point increase and limits interpretation given the 18% response rate."
+              },
+              {
+                "checkId": "scope-overreach",
+                "pass": true,
+                "evidence": "Finding 3 directly challenges both “unqualified success” and the recommendation that every team copy it."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "It prescribes three local fixes without rewriting the draft."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is clearly below 220 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "It supplies the contract, exactly three prioritized findings with quoted phrases and minimal fixes, and a one-sentence boundary; the capitalized “An” is only a minor quotation-casing defect."
+              },
+              {
+                "checkId": "causation-confounds",
+                "pass": true,
+                "evidence": "Finding 1 expressly names lower volume, added contractors, and lack of controlled analysis."
+              },
+              {
+                "checkId": "satisfaction-calibration",
+                "pass": true,
+                "evidence": "It accurately frames 4.1 to 4.2 as slight and limits the statement to respondents because response was 18%."
+              },
+              {
+                "checkId": "scope-overreach",
+                "pass": true,
+                "evidence": "Finding 2 flags the uncontrolled universal recommendation and removes both “unqualified” and the cross-team advice."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.68,
+            "rationale": "Both outputs pass the hard checks. B edges A because it prioritizes the universal generalization ahead of the smaller satisfaction overstatement, gives a grammatically executable causal hedge while requiring acknowledgment of confounders, and sets the more conservative boundary around observed changes. A’s contract is slightly more informative, but its literal replacement of “proves” with “is consistent with” would produce an ungrammatical sentence, and “association” is marginally less cautious than B’s formulation."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 2,
+          "threadRef": "thread-5d689f50618c",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "243ba8f1e9cf8c10fd873f3c0b944b40f2b9b92f38919f37064460b587341ebd",
+          "judgment": {
+            "caseId": "evidence-memo-review",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 9,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 9,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 9,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "Reviews claims and prescribes limited edits without supplying a rewritten draft."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well below 220 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "Provides one reader-contract sentence, exactly three numbered findings with quoted language and fixes, and one boundary sentence."
+              },
+              {
+                "checkId": "causation-confounds",
+                "pass": true,
+                "evidence": "Flags “This proves…” and specifically names the 22% volume decline, added contractors, and lack of controlled analysis."
+              },
+              {
+                "checkId": "satisfaction-calibration",
+                "pass": true,
+                "evidence": "Characterizes 4.1-to-4.2 as slight, cites the 18% response rate, and limits the observation to respondents."
+              },
+              {
+                "checkId": "scope-overreach",
+                "pass": true,
+                "evidence": "Flags both “unqualified success” and the recommendation that every support team copy the rollout."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "Offers focused editing instructions rather than a replacement draft."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well below 220 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "Contains one contract sentence, exactly three numbered findings with exact quotations and fixes, and one evidence-boundary sentence."
+              },
+              {
+                "checkId": "causation-confounds",
+                "pass": true,
+                "evidence": "Identifies the unsupported proof claim and all three actual confounds: lower volume, contractors, and no controlled analysis."
+              },
+              {
+                "checkId": "satisfaction-calibration",
+                "pass": true,
+                "evidence": "Calls the movement a 0.1-point increase, cites the 18% response rate, and confines the claim to respondents."
+              },
+              {
+                "checkId": "scope-overreach",
+                "pass": true,
+                "evidence": "Directly challenges and removes “unqualified” and “every support team should copy.”"
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.77,
+            "rationale": "Both pass the objective checks, but A is marginally stronger. Its causal fix is mechanically usable and explicitly requires acknowledging the confounders, while its boundary precisely limits the evidence to observed temporal changes. B is crisp and has the sharper reader contract, but its proposed literal substitutions—“proves” with “is consistent with” and “much happier” with “reported slightly higher…”—do not fit the existing sentence syntax without further rewriting. A’s capitalization of “An” in one otherwise verbatim quotation is only a minor blemish."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 3,
+          "threadRef": "thread-df643ba0fd37",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "64a4c6a8e295ca53a05e5680ef7963d691a617c3a7e30f2d017a745c17f3e4c4",
+          "judgment": {
+            "caseId": "evidence-memo-review",
+            "scoresA": {
+              "taskFulfillment": 8,
+              "factualFidelity": 9,
+              "attentionStructure": 8,
+              "proseQuality": 8,
+              "constraintCompliance": 7,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 9,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 8,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "It provides critique and localized edit instructions, not a replacement draft."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "It is clearly below 220 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": false,
+                "evidence": "The contract and three findings are present, but two literal fixes are ineffective as written: they would produce “This is consistent with the routing logic made…” and “Customers were reported slightly higher…”."
+              },
+              {
+                "checkId": "causation-confounds",
+                "pass": true,
+                "evidence": "It flags “This proves…” and identifies lower volume, added contractors, and the uncontrolled analysis."
+              },
+              {
+                "checkId": "satisfaction-calibration",
+                "pass": true,
+                "evidence": "It characterizes 4.1 to 4.2 as a 0.1-point increase and limits the claim to respondents given the 18% response rate."
+              },
+              {
+                "checkId": "scope-overreach",
+                "pass": true,
+                "evidence": "It directly flags and removes “unqualified” and “every support team should copy.”"
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "It reviews the claims and prescribes narrow fixes without supplying a rewritten draft."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "It is clearly below 220 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": false,
+                "evidence": "The structure and fixes are otherwise complete, but “An unqualified…” is not an exact quotation because the draft has lowercase “an.”"
+              },
+              {
+                "checkId": "causation-confounds",
+                "pass": true,
+                "evidence": "It explicitly identifies the unsupported causal claim, 22% volume decline, added contractors, and lack of controlled analysis."
+              },
+              {
+                "checkId": "satisfaction-calibration",
+                "pass": true,
+                "evidence": "It calls 4.1 to 4.2 a slight increase among respondents and cites the 18% response rate without claiming no effect."
+              },
+              {
+                "checkId": "scope-overreach",
+                "pass": true,
+                "evidence": "It flags both “unqualified success” and the recommendation that other teams copy the rollout."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.84,
+            "rationale": "Both handle the substantive evidence risks well. B is stronger because it prioritizes the universal-copy claim ahead of the modest satisfaction claim, offers more usable fixes, and gives the more conservative evidence boundary. A’s first two stated substitutions would create malformed sentences if applied literally. B’s main defect is the one-letter capitalization change in an otherwise exact quotation."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 4,
+          "threadRef": "thread-9fb7336464b8",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "243ba8f1e9cf8c10fd873f3c0b944b40f2b9b92f38919f37064460b587341ebd",
+          "judgment": {
+            "caseId": "evidence-memo-review",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 9,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 9,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 8,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "Reviews quoted claims and proposes only localized fixes; it does not supply a rewritten draft."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well below 220 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "Contains one reader contract, exactly three numbered findings with quoted draft language and fixes, and one evidence-boundary sentence."
+              },
+              {
+                "checkId": "causation-confounds",
+                "pass": true,
+                "evidence": "Explicitly identifies the unsupported “proves” claim and names the 22% volume decline, added contractors, and absence of controlled analysis."
+              },
+              {
+                "checkId": "satisfaction-calibration",
+                "pass": true,
+                "evidence": "Characterizes 4.1-to-4.2 as slight and limits it to respondents while noting the 18% response rate."
+              },
+              {
+                "checkId": "scope-overreach",
+                "pass": true,
+                "evidence": "Flags both “unqualified success” and the recommendation that every support team copy it."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "Provides claim-level editorial fixes rather than a rewritten draft."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well below 220 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "Provides one contract, exactly three prioritized findings with exact quotations and proposed fixes, and one boundary sentence."
+              },
+              {
+                "checkId": "causation-confounds",
+                "pass": true,
+                "evidence": "Names the unsupported causal claim and all three required confounds: ticket-volume decline, contractors, and no controlled analysis."
+              },
+              {
+                "checkId": "satisfaction-calibration",
+                "pass": true,
+                "evidence": "Reports the 0.1-point movement, notes the 18% response rate, and limits the characterization to respondents."
+              },
+              {
+                "checkId": "scope-overreach",
+                "pass": true,
+                "evidence": "Directly challenges “unqualified success” and “every support team should copy.”"
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.76,
+            "rationale": "Both outputs pass every objective check. A has the stronger evidence boundary and pairs causal softening with explicit acknowledgment of the confounders. B’s literal substitutions are less usable: replacing only “proves” with “is consistent with,” or “much happier” with “reported slightly higher satisfaction among respondents,” would make the original sentences ungrammatical. A’s capitalization of “An” in one quotation is a minor exactness blemish, but its fixes are more actionable overall."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      ]
+    },
+    "grammar-holdout-control": {
+      "title": "Grammar-only holdout control",
+      "type": "negative_control",
+      "task": "Use standard American English to correct grammar and punctuation only. Do not change meaning, add stakes, strengthen the hook, restructure, or add or remove facts. Return only the corrected text.",
+      "materials": "TEXT\nNeither of the revised budgets include contractor fees. The list of assumptions were attached, but one of the tabs are missing. The analyst said the figures is preliminary.",
+      "objectiveChecks": [
+        {
+          "id": "neither-includes",
+          "hard": true,
+          "description": "It changes 'Neither ... include' to 'Neither ... includes'."
+        },
+        {
+          "id": "list-was",
+          "hard": true,
+          "description": "It changes 'The list ... were' to 'The list ... was'."
+        },
+        {
+          "id": "one-is",
+          "hard": true,
+          "description": "It changes 'one ... are missing' to 'one ... is missing'."
+        },
+        {
+          "id": "figures-are",
+          "hard": true,
+          "description": "It changes 'the figures is' to 'the figures are'."
+        },
+        {
+          "id": "no-style-rewrite",
+          "hard": true,
+          "description": "It makes no other substantive, structural, or factual change."
+        }
+      ],
+      "promptHash": "075de76e51a3c9aa86a1d4475d340e65d3259a9b7fb28943be89bde482cc2766",
+      "generationOrder": [
+        "skill",
+        "baseline"
+      ],
+      "generation": {
+        "skill": {
+          "condition": "skill",
+          "threadRef": "thread-7c1b66688a77",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "075de76e51a3c9aa86a1d4475d340e65d3259a9b7fb28943be89bde482cc2766",
+          "skillInputSent": true,
+          "output": "Neither of the revised budgets includes contractor fees. The list of assumptions was attached, but one of the tabs is missing. The analyst said the figures are preliminary.",
+          "wordCount": 28,
+          "deterministicChecks": {
+            "neither-includes": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'Neither ... includes'."
+            },
+            "list-was": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'The list ... was'."
+            },
+            "one-is": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'one ... is'."
+            },
+            "figures-are": {
+              "pass": true,
+              "evidence": "Expected plural agreement: 'figures are'."
+            },
+            "no-style-rewrite": {
+              "pass": true,
+              "evidence": "Output exactly matches the accepted minimal correction."
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "userMessage"
+          ]
+        },
+        "baseline": {
+          "condition": "baseline",
+          "threadRef": "thread-1358efaa796e",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "075de76e51a3c9aa86a1d4475d340e65d3259a9b7fb28943be89bde482cc2766",
+          "skillInputSent": false,
+          "output": "Neither of the revised budgets includes contractor fees. The list of assumptions was attached, but one of the tabs is missing. The analyst said the figures are preliminary.",
+          "wordCount": 28,
+          "deterministicChecks": {
+            "neither-includes": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'Neither ... includes'."
+            },
+            "list-was": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'The list ... was'."
+            },
+            "one-is": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'one ... is'."
+            },
+            "figures-are": {
+              "pass": true,
+              "evidence": "Expected plural agreement: 'figures are'."
+            },
+            "no-style-rewrite": {
+              "pass": true,
+              "evidence": "Output exactly matches the accepted minimal correction."
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "userMessage"
+          ]
+        }
+      },
+      "judges": [
+        {
+          "judge": 1,
+          "threadRef": "thread-7619852e5fd9",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "33d01c947af2ed38bcae7c9b156b35719a029c18d471e93226e7ecc489293fd5",
+          "judgment": {
+            "caseId": "grammar-holdout-control",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "neither-includes",
+                "pass": true,
+                "evidence": "Changes “include” to “includes.”"
+              },
+              {
+                "checkId": "list-was",
+                "pass": true,
+                "evidence": "Changes “were” to “was.”"
+              },
+              {
+                "checkId": "one-is",
+                "pass": true,
+                "evidence": "Changes “are missing” to “is missing.”"
+              },
+              {
+                "checkId": "figures-are",
+                "pass": true,
+                "evidence": "Changes “figures is” to “figures are.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "Makes no other substantive, structural, or factual changes."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "neither-includes",
+                "pass": true,
+                "evidence": "Changes “include” to “includes.”"
+              },
+              {
+                "checkId": "list-was",
+                "pass": true,
+                "evidence": "Changes “were” to “was.”"
+              },
+              {
+                "checkId": "one-is",
+                "pass": true,
+                "evidence": "Changes “are missing” to “is missing.”"
+              },
+              {
+                "checkId": "figures-are",
+                "pass": true,
+                "evidence": "Changes “figures is” to “figures are.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "Makes no other substantive, structural, or factual changes."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 1,
+            "rationale": "Outputs A and B are identical. Both make exactly the four required subject–verb agreement corrections, preserve all meaning and structure, and introduce no stylistic or factual changes."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 2,
+          "threadRef": "thread-259e2f0a44f6",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "33d01c947af2ed38bcae7c9b156b35719a029c18d471e93226e7ecc489293fd5",
+          "judgment": {
+            "caseId": "grammar-holdout-control",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "neither-includes",
+                "pass": true,
+                "evidence": "Changed “include” to “includes.”"
+              },
+              {
+                "checkId": "list-was",
+                "pass": true,
+                "evidence": "Changed “were” to “was.”"
+              },
+              {
+                "checkId": "one-is",
+                "pass": true,
+                "evidence": "Changed “are missing” to “is missing.”"
+              },
+              {
+                "checkId": "figures-are",
+                "pass": true,
+                "evidence": "Changed “figures is” to “figures are.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No other textual changes were made."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "neither-includes",
+                "pass": true,
+                "evidence": "Changed “include” to “includes.”"
+              },
+              {
+                "checkId": "list-was",
+                "pass": true,
+                "evidence": "Changed “were” to “was.”"
+              },
+              {
+                "checkId": "one-is",
+                "pass": true,
+                "evidence": "Changed “are missing” to “is missing.”"
+              },
+              {
+                "checkId": "figures-are",
+                "pass": true,
+                "evidence": "Changed “figures is” to “figures are.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No other textual changes were made."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 1,
+            "rationale": "Outputs A and B are identical. Both make exactly the four required subject–verb agreement corrections, preserve all meaning and facts, and introduce no stylistic or structural changes."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 3,
+          "threadRef": "thread-bcd4b7e8ee70",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "33d01c947af2ed38bcae7c9b156b35719a029c18d471e93226e7ecc489293fd5",
+          "judgment": {
+            "caseId": "grammar-holdout-control",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "neither-includes",
+                "pass": true,
+                "evidence": "Changed “include” to “includes.”"
+              },
+              {
+                "checkId": "list-was",
+                "pass": true,
+                "evidence": "Changed “were” to “was.”"
+              },
+              {
+                "checkId": "one-is",
+                "pass": true,
+                "evidence": "Changed “are missing” to “is missing.”"
+              },
+              {
+                "checkId": "figures-are",
+                "pass": true,
+                "evidence": "Changed “figures is” to “figures are.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No other changes were made."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "neither-includes",
+                "pass": true,
+                "evidence": "Changed “include” to “includes.”"
+              },
+              {
+                "checkId": "list-was",
+                "pass": true,
+                "evidence": "Changed “were” to “was.”"
+              },
+              {
+                "checkId": "one-is",
+                "pass": true,
+                "evidence": "Changed “are missing” to “is missing.”"
+              },
+              {
+                "checkId": "figures-are",
+                "pass": true,
+                "evidence": "Changed “figures is” to “figures are.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No other changes were made."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 1,
+            "rationale": "Outputs A and B are identical. Both make all four required subject–verb agreement corrections and preserve every other word, fact, and structural element."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 4,
+          "threadRef": "thread-34068f608c0a",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "33d01c947af2ed38bcae7c9b156b35719a029c18d471e93226e7ecc489293fd5",
+          "judgment": {
+            "caseId": "grammar-holdout-control",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "neither-includes",
+                "pass": true,
+                "evidence": "Changed “include” to “includes.”"
+              },
+              {
+                "checkId": "list-was",
+                "pass": true,
+                "evidence": "Changed “were” to “was.”"
+              },
+              {
+                "checkId": "one-is",
+                "pass": true,
+                "evidence": "Changed “are missing” to “is missing.”"
+              },
+              {
+                "checkId": "figures-are",
+                "pass": true,
+                "evidence": "Changed “figures is” to “figures are.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No other substantive, structural, or factual changes."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "neither-includes",
+                "pass": true,
+                "evidence": "Changed “include” to “includes.”"
+              },
+              {
+                "checkId": "list-was",
+                "pass": true,
+                "evidence": "Changed “were” to “was.”"
+              },
+              {
+                "checkId": "one-is",
+                "pass": true,
+                "evidence": "Changed “are missing” to “is missing.”"
+              },
+              {
+                "checkId": "figures-are",
+                "pass": true,
+                "evidence": "Changed “figures is” to “figures are.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No other substantive, structural, or factual changes."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 1,
+            "rationale": "Outputs A and B are identical. Both make exactly the four required subject–verb agreement corrections, preserve all meaning and facts, and introduce no stylistic or structural changes."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      ]
+    }
+  },
+  "summary": {
+    "cases": [
+      {
+        "caseId": "incident-case-study",
+        "type": "positive",
+        "votes": {
+          "baseline": 0,
+          "skill": 4,
+          "tie": 0
+        },
+        "baseline": {
+          "meanTotal": 56,
+          "medianTotal": 56,
+          "meanDimensions": {
+            "taskFulfillment": 9.25,
+            "factualFidelity": 9.25,
+            "attentionStructure": 9.25,
+            "proseQuality": 9,
+            "constraintCompliance": 10,
+            "voicePreservation": 9.25
+          }
+        },
+        "skill": {
+          "meanTotal": 59,
+          "medianTotal": 59,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 10,
+            "attentionStructure": 9.75,
+            "proseQuality": 9.25,
+            "constraintCompliance": 10,
+            "voicePreservation": 10
+          }
+        },
+        "deltaMeanTotal": 3,
+        "objectiveChecks": {
+          "word-range": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "162 words"
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "135 words"
+            }
+          },
+          "deployment-and-metrics": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "confirmed-mechanism": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "rollback-and-recovery": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "no-impact-invention": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          }
+        },
+        "noHardCheckRegression": true,
+        "allSkillHardChecksPass": true,
+        "passedPredeclaredCriterion": true
+      },
+      {
+        "caseId": "fiction-earned-reveal",
+        "type": "positive",
+        "votes": {
+          "baseline": 2,
+          "skill": 2,
+          "tie": 0
+        },
+        "baseline": {
+          "meanTotal": 56.25,
+          "medianTotal": 57,
+          "meanDimensions": {
+            "taskFulfillment": 9.75,
+            "factualFidelity": 10,
+            "attentionStructure": 9.5,
+            "proseQuality": 8.75,
+            "constraintCompliance": 9.5,
+            "voicePreservation": 8.75
+          }
+        },
+        "skill": {
+          "meanTotal": 56.75,
+          "medianTotal": 56.5,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 9.75,
+            "attentionStructure": 9.5,
+            "proseQuality": 9,
+            "constraintCompliance": 10,
+            "voicePreservation": 8.5
+          }
+        },
+        "deltaMeanTotal": 0.5,
+        "objectiveChecks": {
+          "word-range": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "209 words"
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "199 words"
+            }
+          },
+          "frame-card-clues": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "memory-setup": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "reveal-action": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "earned-conclusion": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "close-pov-no-invention": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          }
+        },
+        "noHardCheckRegression": true,
+        "allSkillHardChecksPass": true,
+        "passedPredeclaredCriterion": false
+      },
+      {
+        "caseId": "evidence-memo-review",
+        "type": "positive",
+        "votes": {
+          "baseline": 4,
+          "skill": 0,
+          "tie": 0
+        },
+        "baseline": {
+          "meanTotal": 57.5,
+          "medianTotal": 58.5,
+          "meanDimensions": {
+            "taskFulfillment": 9.75,
+            "factualFidelity": 10,
+            "attentionStructure": 9.75,
+            "proseQuality": 9.75,
+            "constraintCompliance": 8.75,
+            "voicePreservation": 9.5
+          }
+        },
+        "skill": {
+          "meanTotal": 53.5,
+          "medianTotal": 54.5,
+          "meanDimensions": {
+            "taskFulfillment": 8.75,
+            "factualFidelity": 9.5,
+            "attentionStructure": 9.25,
+            "proseQuality": 8.25,
+            "constraintCompliance": 8.75,
+            "voicePreservation": 9
+          }
+        },
+        "deltaMeanTotal": -4,
+        "objectiveChecks": {
+          "no-rewrite": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "word-limit": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "137 words"
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "140 words"
+            }
+          },
+          "requested-structure": {
+            "hard": true,
+            "baselinePassVotes": 3,
+            "skillPassVotes": 3,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "causation-confounds": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "satisfaction-calibration": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "scope-overreach": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          }
+        },
+        "noHardCheckRegression": true,
+        "allSkillHardChecksPass": true,
+        "passedPredeclaredCriterion": false
+      },
+      {
+        "caseId": "grammar-holdout-control",
+        "type": "negative_control",
+        "votes": {
+          "baseline": 0,
+          "skill": 0,
+          "tie": 4
+        },
+        "baseline": {
+          "meanTotal": 60,
+          "medianTotal": 60,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 10,
+            "attentionStructure": 10,
+            "proseQuality": 10,
+            "constraintCompliance": 10,
+            "voicePreservation": 10
+          }
+        },
+        "skill": {
+          "meanTotal": 60,
+          "medianTotal": 60,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 10,
+            "attentionStructure": 10,
+            "proseQuality": 10,
+            "constraintCompliance": 10,
+            "voicePreservation": 10
+          }
+        },
+        "deltaMeanTotal": 0,
+        "objectiveChecks": {
+          "neither-includes": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'Neither ... includes'."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'Neither ... includes'."
+            }
+          },
+          "list-was": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'The list ... was'."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'The list ... was'."
+            }
+          },
+          "one-is": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'one ... is'."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'one ... is'."
+            }
+          },
+          "figures-are": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Expected plural agreement: 'figures are'."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Expected plural agreement: 'figures are'."
+            }
+          },
+          "no-style-rewrite": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Output exactly matches the accepted minimal correction."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Output exactly matches the accepted minimal correction."
+            }
+          }
+        },
+        "noHardCheckRegression": true,
+        "allSkillHardChecksPass": true,
+        "passedPredeclaredCriterion": true
+      }
+    ],
+    "overall": {
+      "preferenceVotes": {
+        "baseline": 6,
+        "skill": 6,
+        "tie": 4
+      },
+      "positiveCasesPassed": 1,
+      "positiveCasesTotal": 3,
+      "negativeControlsPassed": 1,
+      "negativeControlsTotal": 1,
+      "meanScoreDelta": -0.12,
+      "passedPredeclaredSuiteCriterion": false
+    }
+  },
+  "technicalRetries": [],
+  "limitations": [
+    "This is a frozen four-case paired evaluation with one generated sample per condition, not a statistically powered benchmark.",
+    "Blind judges use the same model family as the generators. Separate threads prevent context leakage but do not create external or human independence.",
+    "Model outputs can vary across runs even when prompts and configuration are unchanged.",
+    "The cases are representative synthetic tasks, not evidence of downstream reader behavior or business outcomes.",
+    "Scores and preferences are model judgments; objective check evidence is published so readers can audit it."
+  ]
+}

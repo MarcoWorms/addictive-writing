@@ -1,0 +1,2353 @@
+{
+  "schemaVersion": 1,
+  "runId": "eval-20260712182107-ef2afcd2",
+  "startedAt": "2026-07-12T18:21:07.313Z",
+  "completedAt": "2026-07-12T18:42:20.455Z",
+  "protocol": {
+    "name": "four-case-paired-evaluation",
+    "sampleCountPerCondition": 1,
+    "judgeCountPerPair": 4,
+    "conditions": [
+      "strong_prompt_baseline",
+      "same_prompt_plus_addictive_writing_skill"
+    ],
+    "predeclaredSuccessCriteria": {
+      "positiveCases": "The skill condition receives more blind preference votes than the baseline, passes every hard factual and task-constraint check, and does not perform worse than the baseline on any hard check.",
+      "negativeControl": "The skill condition fixes every seeded grammar error without unauthorized changes to meaning or structure and shows no material regression from the baseline.",
+      "suite": "All three positive cases and the negative control must pass their case criteria for the evaluation to support the headline claim."
+    },
+    "freezePolicy": "Do not change cases, rubrics, checks, or success criteria after viewing outputs. Any change requires a new result set and a new protocol version."
+  },
+  "environment": {
+    "codexVersion": "codex-cli 0.144.0-alpha.4",
+    "appServerUserAgent": "addictive_writing_eval/0.144.0-alpha.4 (Mac OS 26.5.0; arm64) unknown (addictive_writing_eval; 1.0.0)",
+    "nodeVersion": "v24.12.0",
+    "platform": "darwin",
+    "isolation": "Fresh temporary HOME and CODEX_HOME containing only a symlink to file-based auth; empty temporary cwd; minimal environment; read-only threads; shell/apps/web disabled; turns rejected on tool items or model reroutes."
+  },
+  "requestedConfiguration": {
+    "model": "gpt-5.6-sol",
+    "effort": "ultra"
+  },
+  "verifiedCatalogEntry": {
+    "id": "gpt-5.6-sol",
+    "displayName": "GPT-5.6-Sol",
+    "description": "Latest frontier agentic coding model.",
+    "supportedReasoningEfforts": [
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max",
+      "ultra"
+    ]
+  },
+  "frozenInputs": {
+    "skillSha256": "5d797faeba2c72567dd759f40e17f3dddb13ca46daaf7610d19034d4ce8c0a2b",
+    "casesSha256": "71fc1f5d07b411a2c833a5bfa3790fa04acdb32a365553c877aef3f84049f954",
+    "caseCount": 4,
+    "judgesPerPair": 4
+  },
+  "cases": {
+    "short-form-script": {
+      "title": "Short-form script with causal momentum",
+      "type": "positive",
+      "task": "Rewrite the draft below as a 110–150 word spoken short-form video script. Make it engaging and easy to follow. Preserve every fact and qualification in the source brief. Do not add numbers, motives, or causal claims. Return only the finished script.",
+      "materials": "SOURCE BRIEF\n- The team reduced a signup form from nine fields to three.\n- In a 14-day A/B test, the three-field version's conversion rate was 18% lower relative to the nine-field version.\n- Follow-up interviews suggested that some removed fields may have signaled seriousness and trust. The interviews do not establish why conversion changed.\n- Restoring two of the removed fields recovered most, but not all, of the measured loss in a later test.\n\nDRAFT\nToday I want to talk about our signup form experiment. We had a signup form with nine fields, and then we reduced it to three. Then we ran the test for fourteen days. Then conversions fell by eighteen percent. Then we interviewed some users. Then we learned that some of the deleted fields may have signaled that the service was serious. Then we restored two fields and most of the lost conversion came back.",
+      "objectiveChecks": [
+        {
+          "id": "word-range",
+          "hard": true,
+          "description": "The finished script is 110–150 words."
+        },
+        {
+          "id": "relative-result",
+          "hard": true,
+          "description": "It accurately says the three-field version was 18% lower relative to the nine-field version during a 14-day A/B test."
+        },
+        {
+          "id": "interview-limit",
+          "hard": true,
+          "description": "It preserves that interviews only suggested an explanation and did not establish why conversion changed."
+        },
+        {
+          "id": "later-test-limit",
+          "hard": true,
+          "description": "It says restoring two fields recovered most, not all, of the measured loss in a later test."
+        },
+        {
+          "id": "no-invention",
+          "hard": true,
+          "description": "It adds no unsupported numbers, motives, or causal claims."
+        }
+      ],
+      "promptHash": "104ed53997e76cbab638830ee5e1e990ebbb8ad2896b1acf22189c6b6af09a12",
+      "generationOrder": [
+        "baseline",
+        "skill"
+      ],
+      "generation": {
+        "baseline": {
+          "condition": "baseline",
+          "threadRef": "thread-d185d3c0331a",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "104ed53997e76cbab638830ee5e1e990ebbb8ad2896b1acf22189c6b6af09a12",
+          "skillInputSent": false,
+          "output": "What happened when our team made a signup form much shorter? We reduced it from nine fields to three, then compared the two versions in a 14-day A/B test. The result: the three-field version’s conversion rate was 18% lower relative to the nine-field version.\n\nIn follow-up interviews, people suggested that some removed fields may have signaled seriousness and trust. But that suggestion has an important limit: the interviews do not establish why conversion changed.\n\nNext, the team restored two of the removed fields and ran a later test. That version recovered most of the measured loss, but not all of it.\n\nSo, in order: a shorter form performed worse in the first test, interviews raised a possibility without proving an explanation, and restoring two fields recovered most—not all—of the measured loss later.",
+          "wordCount": 135,
+          "deterministicChecks": {
+            "word-range": {
+              "pass": true,
+              "evidence": "135 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        "skill": {
+          "condition": "skill",
+          "threadRef": "thread-c820ef357bb8",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "104ed53997e76cbab638830ee5e1e990ebbb8ad2896b1acf22189c6b6af09a12",
+          "skillInputSent": true,
+          "output": "We cut our signup form from nine fields to three—and the result wasn’t what you might expect.\n\nIn a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version.\n\nSo we followed up with interviews. Those conversations suggested that some removed fields may have signaled seriousness and trust. But that’s only a suggestion: the interviews do not establish why conversion changed.\n\nThen, in a later test, we restored two of the removed fields. That recovered most of the measured loss—but not all of it.\n\nThe takeaway? A shorter form didn’t convert better in this test, and the interview findings shouldn’t be mistaken for proof. What we know is limited to what the tests measured: three fields performed worse than nine, while restoring two fields recovered most of the loss.",
+          "wordCount": 138,
+          "deterministicChecks": {
+            "word-range": {
+              "pass": true,
+              "evidence": "138 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      },
+      "judges": [
+        {
+          "judge": 1,
+          "threadRef": "thread-f13e49f708bb",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "6c33d56958ce9b4fb49ad6b1a4964092a63c1e1ab6fc111847df1a92ee29637b",
+          "judgment": {
+            "caseId": "short-form-script",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "135 words, within the required 110–150 range."
+              },
+              {
+                "checkId": "relative-result",
+                "pass": true,
+                "evidence": "Explicitly states that in a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Says interviews only suggested the signaling explanation and explicitly says they do not establish why conversion changed."
+              },
+              {
+                "checkId": "later-test-limit",
+                "pass": true,
+                "evidence": "States that restoring two removed fields in a later test recovered most of the measured loss, but not all."
+              },
+              {
+                "checkId": "no-invention",
+                "pass": true,
+                "evidence": "Adds no unsupported numbers, motives, or causal claims; the expectation language is rhetorical rather than a factual explanation."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "132 words, within the required 110–150 range."
+              },
+              {
+                "checkId": "relative-result",
+                "pass": true,
+                "evidence": "Explicitly states that in a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Preserves the explanation as a possibility and explicitly says the interviews do not establish why conversion changed."
+              },
+              {
+                "checkId": "later-test-limit",
+                "pass": true,
+                "evidence": "States that restoring two removed fields recovered most, but not all, of the measured loss in a later test."
+              },
+              {
+                "checkId": "no-invention",
+                "pass": true,
+                "evidence": "Adds no unsupported numbers, motives, or causal claims."
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.64,
+            "rationale": "Both outputs pass every hard check and accurately preserve the qualifications. A wins narrowly for its stronger tension-to-payoff rhythm, consistent first-person voice, and source-faithful attribution that the conversations suggested the possibility. B is equally clear but its final “So, in order” recap feels slightly more expository than spoken."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 2,
+          "threadRef": "thread-b9da45e8228c",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "30cebd89923f9b58aaae7abc47b25d3144ebb581d0137edbce4e954a8117f42a",
+          "judgment": {
+            "caseId": "short-form-script",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 8,
+              "proseQuality": 8,
+              "constraintCompliance": 10,
+              "voicePreservation": 8
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "132 words, within the required 110–150 range."
+              },
+              {
+                "checkId": "relative-result",
+                "pass": true,
+                "evidence": "Explicitly states that in a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Says the interviews suggested the fields may have signaled seriousness and trust, then explicitly says they do not establish why conversion changed."
+              },
+              {
+                "checkId": "later-test-limit",
+                "pass": true,
+                "evidence": "States that restoring two removed fields in a later test recovered most of the measured loss, but not all."
+              },
+              {
+                "checkId": "no-invention",
+                "pass": true,
+                "evidence": "Adds no unsupported numbers, motives, or causal explanation."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "135 words, within the required 110–150 range."
+              },
+              {
+                "checkId": "relative-result",
+                "pass": true,
+                "evidence": "Explicitly states that in a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Preserves both the tentative signaling explanation and the explicit warning that interviews do not establish why conversion changed."
+              },
+              {
+                "checkId": "later-test-limit",
+                "pass": true,
+                "evidence": "States that restoring two removed fields in a later test recovered most of the measured loss, but not all."
+              },
+              {
+                "checkId": "no-invention",
+                "pass": true,
+                "evidence": "Introduces no unsupported numbers, motives, or explanation for the conversion change."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.86,
+            "rationale": "Both outputs clear every hard check and preserve the qualifications. B has the stronger spoken delivery: its hook is more immediate, its first-person chronology flows naturally, and its takeaway reinforces the evidentiary limit cleanly. A remains accurate but switches between “we” and “the team,” and its final recap feels more repetitive and mechanical."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 3,
+          "threadRef": "thread-1048554249cb",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "6c33d56958ce9b4fb49ad6b1a4964092a63c1e1ab6fc111847df1a92ee29637b",
+          "judgment": {
+            "caseId": "short-form-script",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 8
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "134 whitespace-delimited words, within 110–150."
+              },
+              {
+                "checkId": "relative-result",
+                "pass": true,
+                "evidence": "Explicitly states that in a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Says interviews only suggested the signaling explanation and explicitly states they do not establish why conversion changed."
+              },
+              {
+                "checkId": "later-test-limit",
+                "pass": true,
+                "evidence": "States that restoring two removed fields in a later test recovered most of the measured loss, but not all."
+              },
+              {
+                "checkId": "no-invention",
+                "pass": true,
+                "evidence": "Adds no unsupported numbers, motives, or explanation for the conversion change."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "132 whitespace-delimited words, within 110–150."
+              },
+              {
+                "checkId": "relative-result",
+                "pass": true,
+                "evidence": "Explicitly states that in a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Presents signaling as a possibility and explicitly says the interviews do not establish why conversion changed."
+              },
+              {
+                "checkId": "later-test-limit",
+                "pass": true,
+                "evidence": "States that restoring two removed fields in a later test recovered most, but not all, of the measured loss."
+              },
+              {
+                "checkId": "no-invention",
+                "pass": true,
+                "evidence": "Adds no unsupported numbers, motives, or causal explanation for the conversion change."
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.66,
+            "rationale": "Both outputs pass every hard check and are clear, accurate scripts. A narrowly wins because its opening creates stronger tension and its takeaway reinforces the evidentiary boundary more naturally. B’s final “So, in order” recap is slightly mechanical, and its shift from first-person team voice is marginally less consistent."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 4,
+          "threadRef": "thread-6f39d256503e",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "30cebd89923f9b58aaae7abc47b25d3144ebb581d0137edbce4e954a8117f42a",
+          "judgment": {
+            "caseId": "short-form-script",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "132 words, within the required 110–150."
+              },
+              {
+                "checkId": "relative-result",
+                "pass": true,
+                "evidence": "Explicitly states that in a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Says interviews raised only a possibility and explicitly did not establish why conversion changed."
+              },
+              {
+                "checkId": "later-test-limit",
+                "pass": true,
+                "evidence": "States that restoring two removed fields in a later test recovered most of the measured loss, but not all."
+              },
+              {
+                "checkId": "no-invention",
+                "pass": true,
+                "evidence": "Adds no unsupported numbers, motives, or explanation for the conversion change."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "135 words, within the required 110–150."
+              },
+              {
+                "checkId": "relative-result",
+                "pass": true,
+                "evidence": "Explicitly states that in a 14-day A/B test, the three-field version’s conversion rate was 18% lower relative to the nine-field version."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Clearly labels the interview finding as only a suggestion and says it does not establish why conversion changed."
+              },
+              {
+                "checkId": "later-test-limit",
+                "pass": true,
+                "evidence": "States that restoring two removed fields in a later test recovered most of the measured loss, but not all."
+              },
+              {
+                "checkId": "no-invention",
+                "pass": true,
+                "evidence": "The rhetorical hook introduces no unsupported number, motive, or causal explanation."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.91,
+            "rationale": "Both outputs pass every hard check and faithfully preserve the qualifications. B is marginally stronger because it maintains a consistent first-person voice, has a sharper hook, and moves more naturally through result, interviews, later test, and qualified takeaway. A is also excellent, but its shift from “our team” to “the team,” slightly stronger attribution that interview participants themselves suggested the explanation, and more report-like final recap make it marginally less natural as spoken short-form video."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      ]
+    },
+    "review-without-rewriting": {
+      "title": "Review-only diagnosis",
+      "type": "positive",
+      "task": "Review the draft below without rewriting any sentence. In 250 words or fewer, provide: (1) a one-sentence reader contract; (2) the three highest-leverage attention problems, each citing an exact phrase; (3) the smallest specific fix for each problem; and (4) one truth-risk check. Use only information in the draft.",
+      "materials": "DRAFT\nOur city opened a tool library last year. A tool library is a place where people can borrow tools. This article will discuss its history, operations, and impact.\n\nFirst, it is important to understand the general concept of sharing. People have shared objects for a long time. There are many kinds of sharing systems, and they can have different rules. Sharing is an important part of communities.\n\nNext, let's discuss how our library operates. Residents can borrow 600 tools. Membership costs $20 a year. The library opened after a survey of 312 residents found that 64% had delayed a home repair because they lacked a tool.\n\nThe program recorded 1,840 loans in its first year. We do not yet know whether it reduced household spending or waste. In conclusion, the tool library is an interesting program with many possible benefits.",
+      "objectiveChecks": [
+        {
+          "id": "no-rewrite",
+          "hard": true,
+          "description": "It diagnoses and proposes fixes without rewriting any source sentence."
+        },
+        {
+          "id": "word-limit",
+          "hard": true,
+          "description": "It stays at or below 250 words."
+        },
+        {
+          "id": "requested-structure",
+          "hard": true,
+          "description": "It follows all four requested sections, gives exactly three problems, and cites exact phrases."
+        },
+        {
+          "id": "buried-specifics",
+          "hard": false,
+          "description": "It notices that the strongest specifics (64%, 312 residents, 1,840 loans, price or inventory) arrive after generic setup."
+        },
+        {
+          "id": "generic-sharing",
+          "hard": false,
+          "description": "It identifies the generic sharing paragraph as an attention leak or weak causal link."
+        },
+        {
+          "id": "truth-limit",
+          "hard": true,
+          "description": "It protects the stated uncertainty about spending and waste instead of treating possible benefits as proven impact."
+        }
+      ],
+      "promptHash": "fa573800fa6c5423c4a6bf1410fa7ef9442fce72b6c529e05299ac8b784de138",
+      "generationOrder": [
+        "skill",
+        "baseline"
+      ],
+      "generation": {
+        "skill": {
+          "condition": "skill",
+          "threadRef": "thread-6ef32307d647",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "fa573800fa6c5423c4a6bf1410fa7ef9442fce72b6c529e05299ac8b784de138",
+          "skillInputSent": true,
+          "output": "1. **Reader contract:** Readers will learn why the city opened the tool library, how it operates, how heavily it was used, and which effects remain unproven.\n\n2. **Attention problem:** “This article will discuss its history, operations, and impact” delays the strongest reason to care.  \n   **Smallest fix:** Delete it and move the survey sentence directly after the opening sentence.\n\n3. **Attention problem:** “People have shared objects for a long time” begins a generic detour that stalls the city-specific story.  \n   **Smallest fix:** Delete the entire paragraph about sharing.\n\n4. **Attention problem:** “an interesting program with many possible benefits” ends on vague speculation after a precise, credible limitation.  \n   **Smallest fix:** Delete the final sentence and end with “We do not yet know whether it reduced household spending or waste.”\n\n5. **Truth-risk check:** Confirm what “1,840 loans” counts; it should not be presented as 1,840 residents, completed repairs, or evidence of reduced spending or waste.",
+          "wordCount": 153,
+          "deterministicChecks": {
+            "word-limit": {
+              "pass": true,
+              "evidence": "153 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        "baseline": {
+          "condition": "baseline",
+          "threadRef": "thread-26bf286f526c",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "fa573800fa6c5423c4a6bf1410fa7ef9442fce72b6c529e05299ac8b784de138",
+          "skillInputSent": false,
+          "output": "1. **Reader contract:** This article explains why the city opened a tool library, how it operates, and what its first-year results do—and do not—demonstrate.\n\n2. **Attention problem:** “This article will discuss its history, operations, and impact” offers generic preview instead of a compelling reason to continue.  \n   **Smallest fix:** Move “The library opened after a survey…” to the opening and delete the preview sentence.\n\n3. **Attention problem:** The paragraph beginning “First, it is important to understand the general concept of sharing” delays the city-specific story without adding evidence.  \n   **Smallest fix:** Delete that paragraph.\n\n4. **Attention problem:** “In conclusion, the tool library is an interesting program with many possible benefits” ends vaguely and weakens the preceding, more meaningful uncertainty.  \n   **Smallest fix:** Delete that sentence so the article ends with “We do not yet know whether it reduced household spending or waste.”\n\n5. **Truth-risk check:** Do not present 1,840 loans as proof of “impact”; the draft establishes use, but explicitly says spending and waste reductions remain unknown.",
+          "wordCount": 167,
+          "deterministicChecks": {
+            "word-limit": {
+              "pass": true,
+              "evidence": "167 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      },
+      "judges": [
+        {
+          "judge": 1,
+          "threadRef": "thread-0b26fba71ee8",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "8eeae24dcb436be274d41ec3edaf772758ad26acb72bc920db667ec6ae3d005f",
+          "judgment": {
+            "caseId": "review-without-rewriting",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "All fixes delete or relocate intact source material; none rewrites a source sentence."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well below 250 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "It includes one reader contract, exactly three quoted problem/fix pairs, and one truth-risk check."
+              },
+              {
+                "checkId": "buried-specifics",
+                "pass": true,
+                "evidence": "It identifies the generic preview as delaying attention and moves the survey sentence—with the 312 and 64% specifics—to the opening."
+              },
+              {
+                "checkId": "generic-sharing",
+                "pass": true,
+                "evidence": "It identifies the entire general-sharing paragraph as an evidence-free delay and recommends deleting it."
+              },
+              {
+                "checkId": "truth-limit",
+                "pass": true,
+                "evidence": "It explicitly distinguishes 1,840 loans from proven impact and preserves the stated uncertainty about spending and waste."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "All fixes delete or move existing sentences without supplying rewritten source prose."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well below 250 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "It provides one contract, exactly three problems with exact quotations and fixes, and one truth-risk check."
+              },
+              {
+                "checkId": "buried-specifics",
+                "pass": true,
+                "evidence": "It calls the survey the strongest reason to care and places that specific evidence directly after the opening."
+              },
+              {
+                "checkId": "generic-sharing",
+                "pass": true,
+                "evidence": "It diagnoses the sharing paragraph as a generic detour and recommends deleting it."
+              },
+              {
+                "checkId": "truth-limit",
+                "pass": true,
+                "evidence": "It warns that loan volume is not evidence of completed repairs or reduced spending or waste."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 0.98,
+            "rationale": "Both outputs pass every objective check, prioritize the same three high-leverage problems, prescribe minimal deletion/reordering fixes, and protect the draft’s uncertainty. B is marginally more exact about survey placement and loan-count ambiguity; A is marginally more restrained and directly aligned with the stated impact limitation. Both share only a slight inference in saying the draft explains “why” the library opened when it strictly says the opening occurred after the survey."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 2,
+          "threadRef": "thread-643191617fda",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "0be916c9f48f8cbae3de13daf59db440ab2ac3c72d36428e63aa5f349f5dc5ac",
+          "judgment": {
+            "caseId": "review-without-rewriting",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "Proposes only deletion and relocation of existing sentences; quoted source wording remains unchanged."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well below 250 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "Includes a one-sentence contract, exactly three quoted problems with specific fixes, and one truth-risk check."
+              },
+              {
+                "checkId": "buried-specifics",
+                "pass": true,
+                "evidence": "Identifies the generic preview as delaying the survey evidence and proposes moving the survey sentence directly after the opening."
+              },
+              {
+                "checkId": "generic-sharing",
+                "pass": true,
+                "evidence": "Calls the sharing paragraph a generic detour and recommends deleting it."
+              },
+              {
+                "checkId": "truth-limit",
+                "pass": true,
+                "evidence": "Preserves the explicit uncertainty about spending and waste and warns against treating loan volume as outcome evidence."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "Limits fixes to moving or deleting existing text and does not supply replacement source sentences."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well below 250 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "Provides one contract sentence, exactly three problems with exact quotations and fixes, and one truth-risk check."
+              },
+              {
+                "checkId": "buried-specifics",
+                "pass": true,
+                "evidence": "Explicitly contrasts the generic preview with the survey evidence and moves that evidence to the opening."
+              },
+              {
+                "checkId": "generic-sharing",
+                "pass": true,
+                "evidence": "Identifies the paragraph beginning with the quoted sharing sentence as a city-story delay without evidence."
+              },
+              {
+                "checkId": "truth-limit",
+                "pass": true,
+                "evidence": "Clearly distinguishes demonstrated use from unproven spending and waste effects."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.78,
+            "rationale": "Both fully satisfy the hard constraints and make nearly identical high-leverage diagnoses. B is slightly stronger because its reader contract and truth check distinguish first-year use from demonstrated impact more precisely. A’s “how heavily it was used” adds a mild qualitative gloss, and “Confirm what ‘1,840 loans’ counts” is grammatically awkward and less direct than B’s evidence-bound warning."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 3,
+          "threadRef": "thread-18cf4f8fa204",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "8eeae24dcb436be274d41ec3edaf772758ad26acb72bc920db667ec6ae3d005f",
+          "judgment": {
+            "caseId": "review-without-rewriting",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "All fixes delete or relocate existing material; no source sentence is rewritten."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well under 250 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "It supplies one reader contract, exactly three phrase-citing problems with fixes, and one truth-risk check."
+              },
+              {
+                "checkId": "buried-specifics",
+                "pass": true,
+                "evidence": "It identifies the generic preview as delaying interest and moves the survey evidence into the opening."
+              },
+              {
+                "checkId": "generic-sharing",
+                "pass": true,
+                "evidence": "It explicitly identifies the paragraph beginning “First, it is important to understand the general concept of sharing” as a city-story delay."
+              },
+              {
+                "checkId": "truth-limit",
+                "pass": true,
+                "evidence": "It distinguishes 1,840 loans from proven impact and preserves the stated uncertainty about spending and waste."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "Its fixes only delete or move source material."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well under 250 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "It provides the contract, exactly three exact-phrase diagnoses and fixes, and one truth-risk check."
+              },
+              {
+                "checkId": "buried-specifics",
+                "pass": true,
+                "evidence": "It says the preview delays the strongest reason to care and moves the survey sentence directly after the opening."
+              },
+              {
+                "checkId": "generic-sharing",
+                "pass": true,
+                "evidence": "It identifies “People have shared objects for a long time” as the start of a generic detour."
+              },
+              {
+                "checkId": "truth-limit",
+                "pass": true,
+                "evidence": "It warns against treating loans as evidence of reduced spending or waste."
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.68,
+            "rationale": "Both outputs fully satisfy the structure and hard constraints with restrained delete-or-move fixes. A has a slight fidelity edge: its contract neutrally describes first-year results, whereas B calls the usage “heavy” without a benchmark and adds a completed-repairs frame not stated in the draft. B’s truth warning is nevertheless valid."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 4,
+          "threadRef": "thread-7ea1d8be3e35",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "0be916c9f48f8cbae3de13daf59db440ab2ac3c72d36428e63aa5f349f5dc5ac",
+          "judgment": {
+            "caseId": "review-without-rewriting",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "All fixes delete or relocate existing sentences; none rewrites a source sentence."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well under 250 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "It includes one reader contract, exactly three quoted problems with specific fixes, and one truth-risk check."
+              },
+              {
+                "checkId": "buried-specifics",
+                "pass": true,
+                "evidence": "It identifies the generic preview as delaying the survey evidence and moves that evidence immediately after the opening."
+              },
+              {
+                "checkId": "generic-sharing",
+                "pass": true,
+                "evidence": "It calls the sharing discussion a generic detour and recommends deleting the paragraph."
+              },
+              {
+                "checkId": "truth-limit",
+                "pass": true,
+                "evidence": "It preserves the explicit uncertainty about spending and waste and warns against treating loans as evidence of either."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "no-rewrite",
+                "pass": true,
+                "evidence": "The fixes only move or delete existing material, including retaining the uncertainty sentence verbatim."
+              },
+              {
+                "checkId": "word-limit",
+                "pass": true,
+                "evidence": "The response is well under 250 words."
+              },
+              {
+                "checkId": "requested-structure",
+                "pass": true,
+                "evidence": "It provides one sentence of reader contract, exactly three phrase-citing diagnoses and fixes, and one truth-risk check."
+              },
+              {
+                "checkId": "buried-specifics",
+                "pass": true,
+                "evidence": "It explicitly contrasts the generic preview with the survey evidence and proposes moving the survey to the opening."
+              },
+              {
+                "checkId": "generic-sharing",
+                "pass": true,
+                "evidence": "It identifies the sharing paragraph as delaying the city-specific story without adding evidence."
+              },
+              {
+                "checkId": "truth-limit",
+                "pass": true,
+                "evidence": "It precisely distinguishes documented use—1,840 loans—from unproven effects on spending and waste."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.87,
+            "rationale": "Both outputs fully satisfy the hard constraints and use restrained move/delete fixes. B is slightly stronger because its truth-risk check maps directly onto the draft’s central evidentiary limit—loans establish use, not impact—without A’s less-grounded speculation about residents or completed repairs. B also diagnoses the entire generic-sharing paragraph and the vague conclusion with slightly greater precision."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      ]
+    },
+    "qualified-newsletter": {
+      "title": "Engaging research summary with limitations",
+      "type": "positive",
+      "task": "Rewrite the draft as a 120–160 word newsletter opening for school leaders. Make the result engaging and useful, but keep every limitation near the claim it qualifies. Do not imply causation, generalize beyond this pilot, or invent findings. Return only the finished opening.",
+      "materials": "SOURCE FACTS\n- One middle school ran an optional six-week tutoring pilot.\n- Forty-two students volunteered, so participation was self-selected.\n- Their mean weekly quiz score moved from 71 before the pilot to 78 at the end.\n- There was no control group.\n- The classroom teacher changed halfway through because of leave.\n- Attendance records for the tutoring sessions were incomplete.\n- Nine student interviews said the sessions helped them plan study time; those reports do not establish what caused the score change.\n\nDRAFT\nA middle school conducted a tutoring pilot for six weeks. There were 42 students. The average quiz score was 71 before and 78 after. Students were interviewed. The pilot had some limitations. Tutoring may be useful for schools.",
+      "objectiveChecks": [
+        {
+          "id": "word-range",
+          "hard": true,
+          "description": "The finished opening is 120–160 words."
+        },
+        {
+          "id": "self-selection",
+          "hard": true,
+          "description": "It states that the 42 students volunteered and participation was self-selected."
+        },
+        {
+          "id": "design-limits",
+          "hard": true,
+          "description": "It retains no control group, the mid-pilot teacher change, and incomplete attendance records near the score result."
+        },
+        {
+          "id": "interview-limit",
+          "hard": true,
+          "description": "It says nine interviews reported planning benefits but do not establish what caused the score change."
+        },
+        {
+          "id": "no-causal-generalization",
+          "hard": true,
+          "description": "It does not imply tutoring caused the change, generalize beyond one pilot, or invent findings."
+        }
+      ],
+      "promptHash": "4c5ba4ebd7417f32943c1e25e1c7056012142dba70c5343a17f0bae3e946716d",
+      "generationOrder": [
+        "baseline",
+        "skill"
+      ],
+      "generation": {
+        "baseline": {
+          "condition": "baseline",
+          "threadRef": "thread-5e5b95f1ac0a",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "4c5ba4ebd7417f32943c1e25e1c7056012142dba70c5343a17f0bae3e946716d",
+          "skillInputSent": false,
+          "output": "What can school leaders learn from a highly limited tutoring snapshot? At one middle school, 42 students volunteered for an optional six-week pilot, making participation self-selected. Their mean weekly quiz score moved from 71 before the pilot to 78 at its end. That seven-point shift cannot be attributed to tutoring: the pilot had no control group, the classroom teacher changed halfway through because of leave, and incomplete session-attendance records prevent a clear view of who received how much tutoring.\n\nNine student interviews add a useful but narrow perspective. Those students said the sessions helped them plan study time; their reports do not establish what caused the score change. For leaders considering a similar pilot, the clearest lesson is about evaluation, not effectiveness: track attendance consistently, document staffing changes, and use a comparison design where feasible. This pilot raises worthwhile questions for one school, but it does not show that tutoring improved scores.",
+          "wordCount": 152,
+          "deterministicChecks": {
+            "word-range": {
+              "pass": true,
+              "evidence": "152 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        "skill": {
+          "condition": "skill",
+          "threadRef": "thread-12cd0b0a15e5",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "4c5ba4ebd7417f32943c1e25e1c7056012142dba70c5343a17f0bae3e946716d",
+          "skillInputSent": true,
+          "output": "At one middle school, an optional six-week tutoring pilot produced a result worth examining—not a verdict. Among 42 students who volunteered, making participation self-selected, mean weekly quiz scores moved from 71 before the pilot to 78 at its end. Because there was no control group—and the classroom teacher changed halfway through because of leave—the change cannot be attributed to tutoring. Incomplete session-attendance records also make it impossible to connect students’ level of participation with their scores.\n\nThe pilot did surface one practical signal. In interviews, nine students said the sessions helped them plan their study time. Those reports describe the students’ experiences; they do not establish what caused the score change. For school leaders, this pilot offers questions for a stronger next round: Who participates, how consistently do they attend, what comparison will be used, and how will staffing changes be documented? The value here is not proof, but a clearer design for learning what happens next.",
+          "wordCount": 160,
+          "deterministicChecks": {
+            "word-range": {
+              "pass": true,
+              "evidence": "160 words"
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      },
+      "judges": [
+        {
+          "judge": 1,
+          "threadRef": "thread-664e8f6d8d51",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "c57a158d71c0af9d6723777482abbe401ffdeae18ac328ab652e7370c1d7c779",
+          "judgment": {
+            "caseId": "qualified-newsletter",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "157 words by whitespace count (160 if em-dash-linked terms are split), within 120–160."
+              },
+              {
+                "checkId": "self-selection",
+                "pass": true,
+                "evidence": "States that 42 students volunteered, “making participation self-selected.”"
+              },
+              {
+                "checkId": "design-limits",
+                "pass": true,
+                "evidence": "Immediately after the score result, identifies no control group, the teacher’s leave-related mid-pilot change, and incomplete attendance records."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Says nine students reported help planning study time and immediately says this does not establish what caused the score change."
+              },
+              {
+                "checkId": "no-causal-generalization",
+                "pass": true,
+                "evidence": "Explicitly says the score change cannot be attributed to tutoring and frames the takeaway as questions for a stronger design."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "152 words, within 120–160."
+              },
+              {
+                "checkId": "self-selection",
+                "pass": true,
+                "evidence": "States that 42 students volunteered and explicitly calls participation self-selected."
+              },
+              {
+                "checkId": "design-limits",
+                "pass": true,
+                "evidence": "Places no control group, the leave-related teacher change, and incomplete attendance records directly after the seven-point shift."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Reports the planning benefit from nine interviews and immediately states that the reports do not establish the cause of the score change."
+              },
+              {
+                "checkId": "no-causal-generalization",
+                "pass": true,
+                "evidence": "Explicitly limits the conclusion to this pilot and says it does not show that tutoring improved scores."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.88,
+            "rationale": "Both outputs fully pass the hard checks and are engaging, useful openings. B is slightly stronger because its limitations are maximally adjacent to the score claim and its wording stays especially precise. A’s claim that incomplete records make a participation-score connection “impossible” is somewhat stronger than the source supports; B more cautiously says they prevent a clear view."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 2,
+          "threadRef": "thread-715d9b37c058",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "56a9e89650f0e85b0592b5013808173a7a2a161f45361c2bbe59cfdee42ca467",
+          "judgment": {
+            "caseId": "qualified-newsletter",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "152 words."
+              },
+              {
+                "checkId": "self-selection",
+                "pass": true,
+                "evidence": "States that 42 students volunteered and explicitly calls participation self-selected."
+              },
+              {
+                "checkId": "design-limits",
+                "pass": true,
+                "evidence": "Immediately after the score shift, identifies no control group, the leave-related teacher change, and incomplete attendance records."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Reports nine interviews about planning study time and says they do not establish what caused the score change."
+              },
+              {
+                "checkId": "no-causal-generalization",
+                "pass": true,
+                "evidence": "Explicitly says the shift cannot be attributed to tutoring and confines conclusions to this pilot."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "157 words by whitespace count; 160 if em-dash-separated terms are counted separately."
+              },
+              {
+                "checkId": "self-selection",
+                "pass": true,
+                "evidence": "States that the 42 students volunteered and explicitly identifies participation as self-selected."
+              },
+              {
+                "checkId": "design-limits",
+                "pass": true,
+                "evidence": "Places the absent control group, mid-pilot leave-related teacher change, and incomplete attendance records directly beside the score result."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Says nine interviewed students reported study-planning help and that their reports do not establish the cause of the score change."
+              },
+              {
+                "checkId": "no-causal-generalization",
+                "pass": true,
+                "evidence": "Explicitly rejects attributing the change to tutoring and makes no effectiveness claim beyond the pilot."
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.68,
+            "rationale": "Both outputs fully pass the objective checks and are strong newsletter openings. A wins narrowly on methodological precision: its calibrated description that incomplete records prevent a clear view stays closer to the source than B’s categorical claim that linking participation and scores is impossible. B has slightly stronger momentum and polish, but phrases such as “produced a result” and “practical signal” are marginally more suggestive despite the nearby caveats."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 3,
+          "threadRef": "thread-6a29851ea464",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "c57a158d71c0af9d6723777482abbe401ffdeae18ac328ab652e7370c1d7c779",
+          "judgment": {
+            "caseId": "qualified-newsletter",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 9,
+              "proseQuality": 9,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "157 words."
+              },
+              {
+                "checkId": "self-selection",
+                "pass": true,
+                "evidence": "States that 42 students volunteered, “making participation self-selected.”"
+              },
+              {
+                "checkId": "design-limits",
+                "pass": true,
+                "evidence": "Immediately follows the score change with no control group, the teacher’s leave-related mid-pilot change, and incomplete attendance records."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Reports nine students’ study-planning comments and says they do not establish what caused the score change."
+              },
+              {
+                "checkId": "no-causal-generalization",
+                "pass": true,
+                "evidence": "Explicitly says the change cannot be attributed to tutoring and frames the pilot as a basis for better evaluation, not proof."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "152 words."
+              },
+              {
+                "checkId": "self-selection",
+                "pass": true,
+                "evidence": "States that 42 students volunteered and explicitly labels participation self-selected."
+              },
+              {
+                "checkId": "design-limits",
+                "pass": true,
+                "evidence": "Places all three design limitations directly after the seven-point score shift."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Reports nine interviews about planning study time and explicitly denies that they establish the cause of the score change."
+              },
+              {
+                "checkId": "no-causal-generalization",
+                "pass": true,
+                "evidence": "Says the shift cannot be attributed to tutoring, limits the takeaway to evaluation, and closes by denying that tutoring was shown to improve scores."
+              }
+            ],
+            "preferred": "B",
+            "confidence": 0.82,
+            "rationale": "Both outputs satisfy every hard check and keep the methodological cautions visible. B is slightly stronger because its limitations are exceptionally tight to the score claim and its wording remains calibrated: incomplete records “prevent a clear view,” whereas A’s claim that they make linkage “impossible” is somewhat stronger than the source supports. B also ends with the clearest pilot-specific noncausal conclusion."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 4,
+          "threadRef": "thread-ad52e295afab",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "56a9e89650f0e85b0592b5013808173a7a2a161f45361c2bbe59cfdee42ca467",
+          "judgment": {
+            "caseId": "qualified-newsletter",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 9,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 9
+            },
+            "checksA": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "152 words."
+              },
+              {
+                "checkId": "self-selection",
+                "pass": true,
+                "evidence": "States that 42 students volunteered for the optional pilot, “making participation self-selected.”"
+              },
+              {
+                "checkId": "design-limits",
+                "pass": true,
+                "evidence": "Immediately after the score shift, identifies no control group, the teacher’s leave-related mid-pilot change, and incomplete attendance records."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Reports nine interviews about planning study time and explicitly says they do not establish what caused the score change."
+              },
+              {
+                "checkId": "no-causal-generalization",
+                "pass": true,
+                "evidence": "Says the shift cannot be attributed to tutoring and closes that this one pilot does not show tutoring improved scores."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "word-range",
+                "pass": true,
+                "evidence": "160 words."
+              },
+              {
+                "checkId": "self-selection",
+                "pass": true,
+                "evidence": "States that the 42 students volunteered, “making participation self-selected.”"
+              },
+              {
+                "checkId": "design-limits",
+                "pass": true,
+                "evidence": "Places no control group and the mid-pilot teacher change directly beside the score result, followed immediately by incomplete attendance records."
+              },
+              {
+                "checkId": "interview-limit",
+                "pass": true,
+                "evidence": "Reports that nine interviewed students described study-planning benefits and says those reports do not establish the cause of the score change."
+              },
+              {
+                "checkId": "no-causal-generalization",
+                "pass": true,
+                "evidence": "Explicitly says the change cannot be attributed to tutoring and frames the pilot as design guidance rather than proof."
+              }
+            ],
+            "preferred": "A",
+            "confidence": 0.74,
+            "rationale": "Both outputs satisfy every hard check and are engaging, useful openings. A is marginally stronger methodologically: it describes incomplete attendance as preventing a clear view of tutoring exposure, whereas B’s claim that the records make any score-participation connection “impossible” is more absolute than the source supports. A also ends with the clearest pilot-scoped noncausal conclusion."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      ]
+    },
+    "grammar-only-control": {
+      "title": "Grammar-only negative control",
+      "type": "negative_control",
+      "task": "Use standard American English to correct grammar and punctuation only. Do not change meaning, add stakes, strengthen the hook, restructure, or add or remove facts. Return only the corrected text.",
+      "materials": "TEXT\nLast Tuesday, the committee were meeting to review the proposal. Each of the three options have a different cost, and the estimates doesn't include tax. The chair asked whether the figures was final; the finance team said they weren't.",
+      "objectiveChecks": [
+        {
+          "id": "committee-was",
+          "hard": true,
+          "description": "It changes 'committee were' to 'committee was'."
+        },
+        {
+          "id": "each-has",
+          "hard": true,
+          "description": "It changes 'Each ... have' to 'Each ... has'."
+        },
+        {
+          "id": "estimates-do-not",
+          "hard": true,
+          "description": "It changes 'estimates doesn't' to 'estimates don't' or 'do not'."
+        },
+        {
+          "id": "figures-were",
+          "hard": true,
+          "description": "It changes 'figures was' to 'figures were'."
+        },
+        {
+          "id": "no-style-rewrite",
+          "hard": true,
+          "description": "It makes no other substantive, structural, or factual change."
+        }
+      ],
+      "promptHash": "7f39b9830962ce6823bd64876567dbe5eebca023ded2027d8de1200091d60bea",
+      "generationOrder": [
+        "skill",
+        "baseline"
+      ],
+      "generation": {
+        "skill": {
+          "condition": "skill",
+          "threadRef": "thread-d857062ebf41",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "7f39b9830962ce6823bd64876567dbe5eebca023ded2027d8de1200091d60bea",
+          "skillInputSent": true,
+          "output": "Last Tuesday, the committee was meeting to review the proposal. Each of the three options has a different cost, and the estimates don't include tax. The chair asked whether the figures were final; the finance team said they weren't.",
+          "wordCount": 39,
+          "deterministicChecks": {
+            "committee-was": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'the committee was meeting'."
+            },
+            "each-has": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'Each ... has'."
+            },
+            "estimates-do-not": {
+              "pass": true,
+              "evidence": "Expected plural agreement: estimates don't/do not include."
+            },
+            "figures-were": {
+              "pass": true,
+              "evidence": "Expected plural agreement: 'figures were'."
+            },
+            "no-style-rewrite": {
+              "pass": true,
+              "evidence": "Output exactly matches an accepted minimal correction."
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        "baseline": {
+          "condition": "baseline",
+          "threadRef": "thread-8c5d30dbf688",
+          "multiAgentMode": "explicitRequestOnly",
+          "promptHash": "7f39b9830962ce6823bd64876567dbe5eebca023ded2027d8de1200091d60bea",
+          "skillInputSent": false,
+          "output": "Last Tuesday, the committee was meeting to review the proposal. Each of the three options has a different cost, and the estimates don't include tax. The chair asked whether the figures were final; the finance team said they weren't.",
+          "wordCount": 39,
+          "deterministicChecks": {
+            "committee-was": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'the committee was meeting'."
+            },
+            "each-has": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'Each ... has'."
+            },
+            "estimates-do-not": {
+              "pass": true,
+              "evidence": "Expected plural agreement: estimates don't/do not include."
+            },
+            "figures-were": {
+              "pass": true,
+              "evidence": "Expected plural agreement: 'figures were'."
+            },
+            "no-style-rewrite": {
+              "pass": true,
+              "evidence": "Output exactly matches an accepted minimal correction."
+            }
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      },
+      "judges": [
+        {
+          "judge": 1,
+          "threadRef": "thread-a4bb9dc4ccc1",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "2938d1e1a0c2acba98237df4296e93544d8b46537bc3c532bbd7440524a15aac",
+          "judgment": {
+            "caseId": "grammar-only-control",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "committee-was",
+                "pass": true,
+                "evidence": "Uses “the committee was meeting.”"
+              },
+              {
+                "checkId": "each-has",
+                "pass": true,
+                "evidence": "Uses “Each of the three options has.”"
+              },
+              {
+                "checkId": "estimates-do-not",
+                "pass": true,
+                "evidence": "Uses “the estimates don't include tax.”"
+              },
+              {
+                "checkId": "figures-were",
+                "pass": true,
+                "evidence": "Uses “the figures were final.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "Makes only the four required agreement corrections; all meaning, facts, and structure remain unchanged."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "committee-was",
+                "pass": true,
+                "evidence": "Uses “the committee was meeting.”"
+              },
+              {
+                "checkId": "each-has",
+                "pass": true,
+                "evidence": "Uses “Each of the three options has.”"
+              },
+              {
+                "checkId": "estimates-do-not",
+                "pass": true,
+                "evidence": "Uses “the estimates don't include tax.”"
+              },
+              {
+                "checkId": "figures-were",
+                "pass": true,
+                "evidence": "Uses “the figures were final.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "Makes only the four required agreement corrections; all meaning, facts, and structure remain unchanged."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 1,
+            "rationale": "A and B are identical. Both satisfy every hard check, preserve the source's meaning and structure, and introduce no stylistic or factual changes."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 2,
+          "threadRef": "thread-27499102720c",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "2938d1e1a0c2acba98237df4296e93544d8b46537bc3c532bbd7440524a15aac",
+          "judgment": {
+            "caseId": "grammar-only-control",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "committee-was",
+                "pass": true,
+                "evidence": "“the committee was meeting”"
+              },
+              {
+                "checkId": "each-has",
+                "pass": true,
+                "evidence": "“Each of the three options has”"
+              },
+              {
+                "checkId": "estimates-do-not",
+                "pass": true,
+                "evidence": "“the estimates don't include tax”"
+              },
+              {
+                "checkId": "figures-were",
+                "pass": true,
+                "evidence": "“the figures were final”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "Only the four required subject–verb agreement corrections were made."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "committee-was",
+                "pass": true,
+                "evidence": "“the committee was meeting”"
+              },
+              {
+                "checkId": "each-has",
+                "pass": true,
+                "evidence": "“Each of the three options has”"
+              },
+              {
+                "checkId": "estimates-do-not",
+                "pass": true,
+                "evidence": "“the estimates don't include tax”"
+              },
+              {
+                "checkId": "figures-were",
+                "pass": true,
+                "evidence": "“the figures were final”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "Only the four required subject–verb agreement corrections were made."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 1,
+            "rationale": "Outputs A and B are identical. Both satisfy every hard check, preserve all meaning, facts, structure, and voice, and introduce no stylistic rewriting."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 3,
+          "threadRef": "thread-082150d771d2",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "baseline",
+            "B": "skill"
+          },
+          "promptHash": "2938d1e1a0c2acba98237df4296e93544d8b46537bc3c532bbd7440524a15aac",
+          "judgment": {
+            "caseId": "grammar-only-control",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "committee-was",
+                "pass": true,
+                "evidence": "Changed “committee were” to “committee was.”"
+              },
+              {
+                "checkId": "each-has",
+                "pass": true,
+                "evidence": "Changed “Each ... have” to “Each ... has.”"
+              },
+              {
+                "checkId": "estimates-do-not",
+                "pass": true,
+                "evidence": "Changed “estimates doesn't” to “estimates don't.”"
+              },
+              {
+                "checkId": "figures-were",
+                "pass": true,
+                "evidence": "Changed “figures was” to “figures were.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No other substantive, structural, or factual changes were made."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "committee-was",
+                "pass": true,
+                "evidence": "Changed “committee were” to “committee was.”"
+              },
+              {
+                "checkId": "each-has",
+                "pass": true,
+                "evidence": "Changed “Each ... have” to “Each ... has.”"
+              },
+              {
+                "checkId": "estimates-do-not",
+                "pass": true,
+                "evidence": "Changed “estimates doesn't” to “estimates don't.”"
+              },
+              {
+                "checkId": "figures-were",
+                "pass": true,
+                "evidence": "Changed “figures was” to “figures were.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No other substantive, structural, or factual changes were made."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 1,
+            "rationale": "Outputs A and B are identical. Both make all four required agreement corrections, preserve every fact and the original structure, and introduce no stylistic or meaning-changing edits."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        },
+        {
+          "judge": 4,
+          "threadRef": "thread-c89f4c5c6eb6",
+          "multiAgentMode": "explicitRequestOnly",
+          "blindOrder": {
+            "A": "skill",
+            "B": "baseline"
+          },
+          "promptHash": "2938d1e1a0c2acba98237df4296e93544d8b46537bc3c532bbd7440524a15aac",
+          "judgment": {
+            "caseId": "grammar-only-control",
+            "scoresA": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "scoresB": {
+              "taskFulfillment": 10,
+              "factualFidelity": 10,
+              "attentionStructure": 10,
+              "proseQuality": 10,
+              "constraintCompliance": 10,
+              "voicePreservation": 10
+            },
+            "checksA": [
+              {
+                "checkId": "committee-was",
+                "pass": true,
+                "evidence": "Changed “committee were” to “committee was.”"
+              },
+              {
+                "checkId": "each-has",
+                "pass": true,
+                "evidence": "Changed “Each … have” to “Each … has.”"
+              },
+              {
+                "checkId": "estimates-do-not",
+                "pass": true,
+                "evidence": "Changed “estimates doesn't” to “estimates don't.”"
+              },
+              {
+                "checkId": "figures-were",
+                "pass": true,
+                "evidence": "Changed “figures was” to “figures were.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No changes beyond the four required subject–verb agreement corrections."
+              }
+            ],
+            "checksB": [
+              {
+                "checkId": "committee-was",
+                "pass": true,
+                "evidence": "Changed “committee were” to “committee was.”"
+              },
+              {
+                "checkId": "each-has",
+                "pass": true,
+                "evidence": "Changed “Each … have” to “Each … has.”"
+              },
+              {
+                "checkId": "estimates-do-not",
+                "pass": true,
+                "evidence": "Changed “estimates doesn't” to “estimates don't.”"
+              },
+              {
+                "checkId": "figures-were",
+                "pass": true,
+                "evidence": "Changed “figures was” to “figures were.”"
+              },
+              {
+                "checkId": "no-style-rewrite",
+                "pass": true,
+                "evidence": "No changes beyond the four required subject–verb agreement corrections."
+              }
+            ],
+            "preferred": "tie",
+            "confidence": 1,
+            "rationale": "Outputs A and B are identical. Both make all four required agreement corrections, preserve every fact and the original structure, and introduce no stylistic or substantive edits."
+          },
+          "observedItemTypes": [
+            "agentMessage",
+            "reasoning",
+            "userMessage"
+          ]
+        }
+      ]
+    }
+  },
+  "summary": {
+    "cases": [
+      {
+        "caseId": "short-form-script",
+        "type": "positive",
+        "votes": {
+          "baseline": 0,
+          "skill": 4,
+          "tie": 0
+        },
+        "baseline": {
+          "meanTotal": 55.75,
+          "medianTotal": 56,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 9.75,
+            "attentionStructure": 8.75,
+            "proseQuality": 8.75,
+            "constraintCompliance": 10,
+            "voicePreservation": 8.5
+          }
+        },
+        "skill": {
+          "meanTotal": 57.75,
+          "medianTotal": 57.5,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 10,
+            "attentionStructure": 9.25,
+            "proseQuality": 9,
+            "constraintCompliance": 10,
+            "voicePreservation": 9.5
+          }
+        },
+        "deltaMeanTotal": 2,
+        "objectiveChecks": {
+          "word-range": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "135 words"
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "138 words"
+            }
+          },
+          "relative-result": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "interview-limit": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "later-test-limit": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "no-invention": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          }
+        },
+        "noHardCheckRegression": true,
+        "allSkillHardChecksPass": true,
+        "passedPredeclaredCriterion": true
+      },
+      {
+        "caseId": "review-without-rewriting",
+        "type": "positive",
+        "votes": {
+          "baseline": 3,
+          "skill": 0,
+          "tie": 1
+        },
+        "baseline": {
+          "meanTotal": 59.75,
+          "medianTotal": 60,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 9.75,
+            "attentionStructure": 10,
+            "proseQuality": 10,
+            "constraintCompliance": 10,
+            "voicePreservation": 10
+          }
+        },
+        "skill": {
+          "meanTotal": 57.75,
+          "medianTotal": 57.5,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 9,
+            "attentionStructure": 9.5,
+            "proseQuality": 9.25,
+            "constraintCompliance": 10,
+            "voicePreservation": 10
+          }
+        },
+        "deltaMeanTotal": -2,
+        "objectiveChecks": {
+          "no-rewrite": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "word-limit": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "167 words"
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "153 words"
+            }
+          },
+          "requested-structure": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "buried-specifics": {
+            "hard": false,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "generic-sharing": {
+            "hard": false,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "truth-limit": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          }
+        },
+        "noHardCheckRegression": true,
+        "allSkillHardChecksPass": true,
+        "passedPredeclaredCriterion": false
+      },
+      {
+        "caseId": "qualified-newsletter",
+        "type": "positive",
+        "votes": {
+          "baseline": 4,
+          "skill": 0,
+          "tie": 0
+        },
+        "baseline": {
+          "meanTotal": 58.5,
+          "medianTotal": 58.5,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 10,
+            "attentionStructure": 10,
+            "proseQuality": 9.5,
+            "constraintCompliance": 10,
+            "voicePreservation": 9
+          }
+        },
+        "skill": {
+          "meanTotal": 57,
+          "medianTotal": 57,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 9,
+            "attentionStructure": 9.5,
+            "proseQuality": 9.5,
+            "constraintCompliance": 10,
+            "voicePreservation": 9
+          }
+        },
+        "deltaMeanTotal": -1.5,
+        "objectiveChecks": {
+          "word-range": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "152 words"
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "160 words"
+            }
+          },
+          "self-selection": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "design-limits": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "interview-limit": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          },
+          "no-causal-generalization": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": null,
+            "skillDeterministic": null
+          }
+        },
+        "noHardCheckRegression": true,
+        "allSkillHardChecksPass": true,
+        "passedPredeclaredCriterion": false
+      },
+      {
+        "caseId": "grammar-only-control",
+        "type": "negative_control",
+        "votes": {
+          "baseline": 0,
+          "skill": 0,
+          "tie": 4
+        },
+        "baseline": {
+          "meanTotal": 60,
+          "medianTotal": 60,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 10,
+            "attentionStructure": 10,
+            "proseQuality": 10,
+            "constraintCompliance": 10,
+            "voicePreservation": 10
+          }
+        },
+        "skill": {
+          "meanTotal": 60,
+          "medianTotal": 60,
+          "meanDimensions": {
+            "taskFulfillment": 10,
+            "factualFidelity": 10,
+            "attentionStructure": 10,
+            "proseQuality": 10,
+            "constraintCompliance": 10,
+            "voicePreservation": 10
+          }
+        },
+        "deltaMeanTotal": 0,
+        "objectiveChecks": {
+          "committee-was": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'the committee was meeting'."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'the committee was meeting'."
+            }
+          },
+          "each-has": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'Each ... has'."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Expected singular agreement: 'Each ... has'."
+            }
+          },
+          "estimates-do-not": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Expected plural agreement: estimates don't/do not include."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Expected plural agreement: estimates don't/do not include."
+            }
+          },
+          "figures-were": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Expected plural agreement: 'figures were'."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Expected plural agreement: 'figures were'."
+            }
+          },
+          "no-style-rewrite": {
+            "hard": true,
+            "baselinePassVotes": 4,
+            "skillPassVotes": 4,
+            "judgeCount": 4,
+            "baselineMajorityPass": true,
+            "skillMajorityPass": true,
+            "baselineDeterministic": {
+              "pass": true,
+              "evidence": "Output exactly matches an accepted minimal correction."
+            },
+            "skillDeterministic": {
+              "pass": true,
+              "evidence": "Output exactly matches an accepted minimal correction."
+            }
+          }
+        },
+        "noHardCheckRegression": true,
+        "allSkillHardChecksPass": true,
+        "passedPredeclaredCriterion": true
+      }
+    ],
+    "overall": {
+      "preferenceVotes": {
+        "baseline": 7,
+        "skill": 4,
+        "tie": 5
+      },
+      "positiveCasesPassed": 1,
+      "positiveCasesTotal": 3,
+      "negativeControlsPassed": 1,
+      "negativeControlsTotal": 1,
+      "meanScoreDelta": -0.37,
+      "passedPredeclaredSuiteCriterion": false
+    }
+  },
+  "technicalRetries": [],
+  "limitations": [
+    "This is a frozen four-case paired evaluation with one generated sample per condition, not a statistically powered benchmark.",
+    "Blind judges use the same model family as the generators. Separate threads prevent context leakage but do not create external or human independence.",
+    "Model outputs can vary across runs even when prompts and configuration are unchanged.",
+    "The cases are representative synthetic tasks, not evidence of downstream reader behavior or business outcomes.",
+    "Scores and preferences are model judgments; objective check evidence is published so readers can audit it."
+  ]
+}

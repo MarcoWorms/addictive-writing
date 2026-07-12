@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "protocol": {
+    "name": "holdout-v1-four-case-paired-evaluation",
+    "sampleCountPerCondition": 1,
+    "judgeCountPerPair": 4,
+    "conditions": [
+      "strong_prompt_baseline",
+      "same_prompt_plus_addictive_writing_skill"
+    ],
+    "predeclaredSuccessCriteria": {
+      "positiveCases": "The skill condition receives more blind preference votes than the baseline, passes every hard factual and task-constraint check, and does not perform worse than the baseline on any hard check.",
+      "negativeControl": "The skill condition fixes every seeded grammar error without unauthorized changes to meaning or structure and shows no material regression from the baseline.",
+      "suite": "All three positive cases and the negative control must pass their case criteria for the evaluation to support the headline claim."
+    },
+    "freezePolicy": "This holdout was written after the development-suite revision and frozen before any holdout output was generated. Do not change cases, rubrics, checks, or success criteria after viewing outputs. Any change requires a new result set and protocol version."
+  },
+  "cases": [
+    {
+      "id": "incident-case-study",
+      "title": "Engineering incident case-study opening",
+      "type": "positive",
+      "task": "Rewrite the draft below as a 130–170 word opening for an engineering case study. Make it engaging and causally clear while keeping a restrained technical voice. Preserve every fact, distinguish the confirmed mechanism from mere timing, and do not invent customer, revenue, or business impact. Return only the finished opening.",
+      "materials": "SOURCE FACTS\n- On June 18 at 9:00, the team deployed a cache change intended to reduce median catalog load time.\n- By 9:30, median catalog load time had moved from 2.4 seconds to 1.5 seconds.\n- During the same interval, the checkout error rate moved from 0.8% to 3.1%.\n- Logs and a reproduction confirmed that some cached pages served expired checkout tokens.\n- The team rolled back the change at 10:20.\n- By 10:35, checkout errors were at 0.9% and median catalog load time was 2.3 seconds.\n- The team has no estimate of customer, revenue, or other business impact.\n\nDRAFT\nOn June 18 we deployed a cache change at 9:00. It was meant to improve catalog speed. By 9:30 median load time went from 2.4 seconds to 1.5 seconds. Checkout errors also went from 0.8% to 3.1%. We investigated. Logs and reproduction confirmed some cached pages served expired checkout tokens. We rolled back at 10:20. By 10:35 errors were 0.9% and load time was 2.3 seconds. We do not have an estimate of customer, revenue, or business impact.",
+      "objectiveChecks": [
+        {"id": "word-range", "hard": true, "description": "The finished opening is 130–170 words."},
+        {"id": "deployment-and-metrics", "hard": true, "description": "It preserves the deployment time and the before/after load-time and checkout-error metrics through 9:30."},
+        {"id": "confirmed-mechanism", "hard": true, "description": "It accurately distinguishes the confirmed expired-token mechanism from mere temporal association."},
+        {"id": "rollback-and-recovery", "hard": true, "description": "It preserves the 10:20 rollback and the 10:35 error-rate and load-time measurements."},
+        {"id": "no-impact-invention", "hard": true, "description": "It states or preserves that customer, revenue, and business impact were not estimated and invents none."}
+      ],
+      "judgeGuidance": "Reward causal clarity, contrast, compression, and technical credibility. Do not reward alarmist language or invented impact."
+    },
+    {
+      "id": "fiction-earned-reveal",
+      "title": "Fiction scene with an earned reveal",
+      "type": "positive",
+      "task": "Rewrite the draft below as a 180–230 word scene in close third-person from Eli’s point of view. Strengthen tension, prediction, and the earned reveal while preserving every plot fact. Do not add characters, dialogue, backstory, new plot actions, or new explanatory mechanisms. Non-plot sensory description is allowed. Return only the finished scene.",
+      "materials": "DRAFT\nEli entered the rehearsal room. The locked glass display frame was intact, but the signed ace was missing. A blank card lay on the floor beneath the frame. The lower corner of the frame’s backing was loose. Eli remembered the master holding the signed ace near the lamp during rehearsal and watching its signature fade. The lamp was still lit. Eli held the blank card near it, and the signature returned. The ace had slipped through the loose backing. It had not been stolen.",
+      "objectiveChecks": [
+        {"id": "word-range", "hard": true, "description": "The finished scene is 180–230 words."},
+        {"id": "frame-card-clues", "hard": true, "description": "It preserves the intact locked frame, missing signed ace, blank card below it, and loose lower backing corner."},
+        {"id": "memory-setup", "hard": true, "description": "It preserves Eli’s memory that the master held the signed ace near the lamp and its signature faded."},
+        {"id": "reveal-action", "hard": true, "description": "It preserves that the lamp is lit, Eli holds the blank card near it, and the signature returns."},
+        {"id": "earned-conclusion", "hard": true, "description": "It concludes from the clues that the ace slipped through the backing and was not stolen, without a new mechanism or plot event."},
+        {"id": "close-pov-no-invention", "hard": true, "description": "It stays in close third-person Eli and adds no character, dialogue, backstory, or new plot action."}
+      ],
+      "judgeGuidance": "Reward a fair prediction-and-reveal sequence, close point of view, rhythm, and restraint. Penalize mystery created by withholding a required clue or adding unsupported plot material."
+    },
+    {
+      "id": "evidence-memo-review",
+      "title": "Evidence-bound executive memo review",
+      "type": "positive",
+      "task": "Review the draft below without rewriting it. In 220 words or fewer, give: (1) a one-sentence reader contract; (2) exactly three prioritized findings, each citing an exact phrase and naming the smallest effective fix; and (3) a one-sentence boundary on what the evidence supports. Use only the draft and flag actual risks rather than hypothetical ones.",
+      "materials": "DRAFT\nThe new routing system transformed support. After it launched, median first-response time fell from 11 hours to 8 hours over the next four weeks. This proves the routing logic made the team faster. Customers were much happier too: satisfaction moved from 4.1 to 4.2. Ticket volume fell 22% during the period, and two contractors joined in week two. We did not run a controlled analysis. The satisfaction survey response rate was 18%. In conclusion, the rollout was an unqualified success that every support team should copy.",
+      "objectiveChecks": [
+        {"id": "no-rewrite", "hard": true, "description": "It reviews and prescribes fixes without presenting a rewritten draft."},
+        {"id": "word-limit", "hard": true, "description": "It stays at or below 220 words."},
+        {"id": "requested-structure", "hard": true, "description": "It provides the reader contract, exactly three prioritized findings with exact phrases and smallest fixes, and one evidence boundary."},
+        {"id": "causation-confounds", "hard": true, "description": "It flags the unsupported causal claim and the actual confounds of lower ticket volume, added contractors, and no controlled analysis."},
+        {"id": "satisfaction-calibration", "hard": true, "description": "It calibrates the 4.1-to-4.2 satisfaction change and 18% response rate without inventing a benchmark or declaring no effect."},
+        {"id": "scope-overreach", "hard": true, "description": "It flags 'unqualified success' and 'every support team should copy' as unsupported scope or generalization."}
+      ],
+      "judgeGuidance": "Reward evidence calibration, prioritization, specific minimal fixes, and a useful reader contract. Do not reward invented scenarios or a full rewrite."
+    },
+    {
+      "id": "grammar-holdout-control",
+      "title": "Grammar-only holdout control",
+      "type": "negative_control",
+      "task": "Use standard American English to correct grammar and punctuation only. Do not change meaning, add stakes, strengthen the hook, restructure, or add or remove facts. Return only the corrected text.",
+      "materials": "TEXT\nNeither of the revised budgets include contractor fees. The list of assumptions were attached, but one of the tabs are missing. The analyst said the figures is preliminary.",
+      "objectiveChecks": [
+        {"id": "neither-includes", "hard": true, "description": "It changes 'Neither ... include' to 'Neither ... includes'."},
+        {"id": "list-was", "hard": true, "description": "It changes 'The list ... were' to 'The list ... was'."},
+        {"id": "one-is", "hard": true, "description": "It changes 'one ... are missing' to 'one ... is missing'."},
+        {"id": "figures-are", "hard": true, "description": "It changes 'the figures is' to 'the figures are'."},
+        {"id": "no-style-rewrite", "hard": true, "description": "It makes no other substantive, structural, or factual change."}
+      ],
+      "judgeGuidance": "Attention and style are irrelevant here. Any dramatic, structural, or meaning-changing edit is a failure, even if it sounds more engaging."
+    }
+  ]
+}

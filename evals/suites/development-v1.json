@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "protocol": {
+    "name": "four-case-paired-evaluation",
+    "sampleCountPerCondition": 1,
+    "judgeCountPerPair": 4,
+    "conditions": [
+      "strong_prompt_baseline",
+      "same_prompt_plus_addictive_writing_skill"
+    ],
+    "predeclaredSuccessCriteria": {
+      "positiveCases": "The skill condition receives more blind preference votes than the baseline, passes every hard factual and task-constraint check, and does not perform worse than the baseline on any hard check.",
+      "negativeControl": "The skill condition fixes every seeded grammar error without unauthorized changes to meaning or structure and shows no material regression from the baseline.",
+      "suite": "All three positive cases and the negative control must pass their case criteria for the evaluation to support the headline claim."
+    },
+    "freezePolicy": "Do not change cases, rubrics, checks, or success criteria after viewing outputs. Any change requires a new result set and a new protocol version."
+  },
+  "cases": [
+    {
+      "id": "short-form-script",
+      "title": "Short-form script with causal momentum",
+      "type": "positive",
+      "task": "Rewrite the draft below as a 110–150 word spoken short-form video script. Make it engaging and easy to follow. Preserve every fact and qualification in the source brief. Do not add numbers, motives, or causal claims. Return only the finished script.",
+      "materials": "SOURCE BRIEF\n- The team reduced a signup form from nine fields to three.\n- In a 14-day A/B test, the three-field version's conversion rate was 18% lower relative to the nine-field version.\n- Follow-up interviews suggested that some removed fields may have signaled seriousness and trust. The interviews do not establish why conversion changed.\n- Restoring two of the removed fields recovered most, but not all, of the measured loss in a later test.\n\nDRAFT\nToday I want to talk about our signup form experiment. We had a signup form with nine fields, and then we reduced it to three. Then we ran the test for fourteen days. Then conversions fell by eighteen percent. Then we interviewed some users. Then we learned that some of the deleted fields may have signaled that the service was serious. Then we restored two fields and most of the lost conversion came back.",
+      "objectiveChecks": [
+        {"id": "word-range", "hard": true, "description": "The finished script is 110–150 words."},
+        {"id": "relative-result", "hard": true, "description": "It accurately says the three-field version was 18% lower relative to the nine-field version during a 14-day A/B test."},
+        {"id": "interview-limit", "hard": true, "description": "It preserves that interviews only suggested an explanation and did not establish why conversion changed."},
+        {"id": "later-test-limit", "hard": true, "description": "It says restoring two fields recovered most, not all, of the measured loss in a later test."},
+        {"id": "no-invention", "hard": true, "description": "It adds no unsupported numbers, motives, or causal claims."}
+      ],
+      "judgeGuidance": "Reward a concrete hook, causal flow, clean payoff, and spoken rhythm only after all factual qualifications are protected."
+    },
+    {
+      "id": "review-without-rewriting",
+      "title": "Review-only diagnosis",
+      "type": "positive",
+      "task": "Review the draft below without rewriting any sentence. In 250 words or fewer, provide: (1) a one-sentence reader contract; (2) the three highest-leverage attention problems, each citing an exact phrase; (3) the smallest specific fix for each problem; and (4) one truth-risk check. Use only information in the draft.",
+      "materials": "DRAFT\nOur city opened a tool library last year. A tool library is a place where people can borrow tools. This article will discuss its history, operations, and impact.\n\nFirst, it is important to understand the general concept of sharing. People have shared objects for a long time. There are many kinds of sharing systems, and they can have different rules. Sharing is an important part of communities.\n\nNext, let's discuss how our library operates. Residents can borrow 600 tools. Membership costs $20 a year. The library opened after a survey of 312 residents found that 64% had delayed a home repair because they lacked a tool.\n\nThe program recorded 1,840 loans in its first year. We do not yet know whether it reduced household spending or waste. In conclusion, the tool library is an interesting program with many possible benefits.",
+      "objectiveChecks": [
+        {"id": "no-rewrite", "hard": true, "description": "It diagnoses and proposes fixes without rewriting any source sentence."},
+        {"id": "word-limit", "hard": true, "description": "It stays at or below 250 words."},
+        {"id": "requested-structure", "hard": true, "description": "It follows all four requested sections, gives exactly three problems, and cites exact phrases."},
+        {"id": "buried-specifics", "hard": false, "description": "It notices that the strongest specifics (64%, 312 residents, 1,840 loans, price or inventory) arrive after generic setup."},
+        {"id": "generic-sharing", "hard": false, "description": "It identifies the generic sharing paragraph as an attention leak or weak causal link."},
+        {"id": "truth-limit", "hard": true, "description": "It protects the stated uncertainty about spending and waste instead of treating possible benefits as proven impact."}
+      ],
+      "judgeGuidance": "Do not reward a polished rewrite because rewriting is forbidden. Reward specific diagnosis, correct prioritization, minimal fixes, and restraint."
+    },
+    {
+      "id": "qualified-newsletter",
+      "title": "Engaging research summary with limitations",
+      "type": "positive",
+      "task": "Rewrite the draft as a 120–160 word newsletter opening for school leaders. Make the result engaging and useful, but keep every limitation near the claim it qualifies. Do not imply causation, generalize beyond this pilot, or invent findings. Return only the finished opening.",
+      "materials": "SOURCE FACTS\n- One middle school ran an optional six-week tutoring pilot.\n- Forty-two students volunteered, so participation was self-selected.\n- Their mean weekly quiz score moved from 71 before the pilot to 78 at the end.\n- There was no control group.\n- The classroom teacher changed halfway through because of leave.\n- Attendance records for the tutoring sessions were incomplete.\n- Nine student interviews said the sessions helped them plan study time; those reports do not establish what caused the score change.\n\nDRAFT\nA middle school conducted a tutoring pilot for six weeks. There were 42 students. The average quiz score was 71 before and 78 after. Students were interviewed. The pilot had some limitations. Tutoring may be useful for schools.",
+      "objectiveChecks": [
+        {"id": "word-range", "hard": true, "description": "The finished opening is 120–160 words."},
+        {"id": "self-selection", "hard": true, "description": "It states that the 42 students volunteered and participation was self-selected."},
+        {"id": "design-limits", "hard": true, "description": "It retains no control group, the mid-pilot teacher change, and incomplete attendance records near the score result."},
+        {"id": "interview-limit", "hard": true, "description": "It says nine interviews reported planning benefits but do not establish what caused the score change."},
+        {"id": "no-causal-generalization", "hard": true, "description": "It does not imply tutoring caused the change, generalize beyond one pilot, or invent findings."}
+      ],
+      "judgeGuidance": "Reward relevance and momentum only when every methodological limitation stays visible and correctly scoped."
+    },
+    {
+      "id": "grammar-only-control",
+      "title": "Grammar-only negative control",
+      "type": "negative_control",
+      "task": "Use standard American English to correct grammar and punctuation only. Do not change meaning, add stakes, strengthen the hook, restructure, or add or remove facts. Return only the corrected text.",
+      "materials": "TEXT\nLast Tuesday, the committee were meeting to review the proposal. Each of the three options have a different cost, and the estimates doesn't include tax. The chair asked whether the figures was final; the finance team said they weren't.",
+      "objectiveChecks": [
+        {"id": "committee-was", "hard": true, "description": "It changes 'committee were' to 'committee was'."},
+        {"id": "each-has", "hard": true, "description": "It changes 'Each ... have' to 'Each ... has'."},
+        {"id": "estimates-do-not", "hard": true, "description": "It changes 'estimates doesn't' to 'estimates don't' or 'do not'."},
+        {"id": "figures-were", "hard": true, "description": "It changes 'figures was' to 'figures were'."},
+        {"id": "no-style-rewrite", "hard": true, "description": "It makes no other substantive, structural, or factual change."}
+      ],
+      "judgeGuidance": "Attention and style are irrelevant here. Any dramatic, structural, or meaning-changing edit is a failure, even if the prose sounds more engaging."
+    }
+  ]
+}
