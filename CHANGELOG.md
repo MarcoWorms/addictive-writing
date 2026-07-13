@@ -2,6 +2,17 @@
 
 All notable changes to Addictive Writing are documented here.
 
+## [1.0.2] - 2026-07-12
+
+### Changed
+
+- Replaced the rewrite-heavy corpus with a balanced 24-case suite: 12 create-from-scratch, 6 rewrite, 3 review, and 3 outline tasks.
+- Added 48 fresh raw outputs across five target-size tiers and 24 categories.
+- Added a private blind-review web workspace with stable A/B assignments, filters, local progress, notes, treatment reveal, keyboard navigation, and JSON/CSV export.
+- Kept the Markdown table as an archival fallback instead of the primary review surface.
+- Hardened app-server isolation with shared no-tool instructions, explicit capability disables, disallowed-item aborts, and atomic per-pair checkpoints.
+- Scoped saved reviews to the exact run and made the app reject stale, incomplete, or hash-mismatched result artifacts.
+
 ## [1.0.1] - 2026-07-12
 
 ### Changed
@@ -23,5 +34,6 @@ All notable changes to Addictive Writing are documented here.
 - Truthfulness and safety constraints that protect facts, uncertainty, qualifications, intent, and voice.
 - Apache-2.0 license and Claude.ai-compatible release archive.
 
+[1.0.2]: https://github.com/MarcoWorms/addictive-writing/releases/tag/v1.0.2
 [1.0.1]: https://github.com/MarcoWorms/addictive-writing/releases/tag/v1.0.1
 [1.0.0]: https://github.com/MarcoWorms/addictive-writing/releases/tag/v1.0.0

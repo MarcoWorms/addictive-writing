@@ -10,20 +10,24 @@ Addictive Writing is an open Agent Skill for drafting, rewriting, outlining, pun
 npx skills add MarcoWorms/addictive-writing
 ```
 
-## Judge the real outputs yourself
+## Review 48 raw outputs yourself
 
-The repository contains a [20-case side-by-side comparison](comparison/TABLE.md) generated through Codex app-server with `gpt-5.6-sol` at `ultra` reasoning effort.
+[**Open the blind review workspace →**](https://addictive-writing-review.marcogworms.chatgpt.site)
 
-The cases range from 29-word source snippets to 1,227-word source documents and span grammar, microfiction, product copy, social posts, email, video, technical updates, event copy, explainers, case studies, newsletters, speeches, executive memos, long-form articles, documentary scripts, fiction, keynote writing, personal essays, and policy writing.
+The balanced suite contains 24 fully synthetic tasks generated through Codex app-server with `gpt-5.6-sol` at `ultra` reasoning effort:
 
-Every row exposes:
+| Workflow | Cases | What it tests |
+|---|---:|---|
+| Create from scratch | 12 | Original ads, packaging, email, fundraising, landing pages, scripts, sales copy, and fiction from briefs—not drafts |
+| Rewrite | 6 | Transforming supplied text from microcopy through long-form B2B copy |
+| Review | 3 | Diagnosing conversion copy, a public statement, and a grant narrative without rewriting |
+| Outline | 3 | Structuring an audio walk, technical webinar, and serialized mystery |
 
-- the exact user prompt;
-- the raw output from a fresh thread without the skill;
-- the raw output from a fresh thread with the skill;
-- blank fields for your own pick and notes.
+Targets range from 35-word ads to 1,400-word fiction across 24 categories. The browser workspace presents one case at a time with stable blind A/B labels, prompt and treatment reveal controls, mode/size/category filters, local notes and preferences, keyboard navigation, progress tracking, and JSON/CSV export.
 
-There is no model judge, score, winner, or editorial selection. The visible prompt is byte-identical in both conditions; the only treatment difference is the separate `addictive-writing` skill input. [Open the full comparison table →](comparison/TABLE.md)
+There is no model judge, score, winner, or editorial selection. Every prompt and output is raw, including constraint misses. The visible prompt is byte-identical in both conditions; the skill condition differs only by a separate `addictive-writing` skill input.
+
+Audit the [frozen corpus](comparison/corpus.json), [machine-readable results](comparison/results.json), or [raw Markdown fallback](comparison/TABLE.md).
 
 ## What it helps with
 
@@ -70,7 +74,7 @@ There is no npm package to publish. The `skills` CLI installs the skill from thi
 
 ## Reproduce the comparison
 
-The dependency-free runner starts a fresh isolated thread for every output, alternates condition order by case, disables shell/apps/web, rejects model rerouting or tool use, and performs no retries:
+The dependency-free runner starts a fresh isolated thread for every output, alternates condition order by case, disables shell, apps, web, collaboration, browser, computer-use, and other tools, rejects model rerouting or tool items, checkpoints every accepted pair, and performs no retries:
 
 ```bash
 node comparison/run-pairs.mjs \
@@ -83,7 +87,15 @@ node comparison/render-table.mjs \
   --output comparison/TABLE.md
 ```
 
-See the [comparison method](comparison/README.md), [frozen corpus](comparison/corpus.json), and [machine-readable results](comparison/results.json). This is one unjudged output pair per task, not a statistical performance estimate.
+Launch the same review interface locally:
+
+```bash
+cd review-app
+npm install
+npm run dev
+```
+
+See the [comparison method](comparison/README.md), [frozen corpus](comparison/corpus.json), [machine-readable results](comparison/results.json), and [review-app source](review-app). This is one unjudged output pair per task, not a statistical performance estimate.
 
 ## Safety and transparency
 

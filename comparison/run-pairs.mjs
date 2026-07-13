@@ -8,6 +8,7 @@ import {
   mkdir,
   mkdtemp,
   readFile,
+  rename,
   rm,
   symlink,
   writeFile,
@@ -28,12 +29,19 @@ const ALLOWED_ITEM_TYPES = new Set([
   "skill",
 ]);
 const SIZE_RANGES = {
-  tiny: [1, 60],
-  short: [61, 180],
-  medium: [181, 450],
-  large: [451, 850],
-  very_large: [851, 1600],
+  tiny: [1, 75],
+  short: [76, 200],
+  medium: [201, 500],
+  large: [501, 900],
+  very_large: [901, 1500],
 };
+const TASK_MODES = new Set(["create", "rewrite", "review", "outline"]);
+const SHARED_DEVELOPER_INSTRUCTIONS = [
+  "This is an isolated writing comparison.",
+  "Complete the user's writing task yourself.",
+  "Do not use tools, delegate, spawn subagents, inspect files, browse, or produce a plan.",
+  "Return only the deliverable requested by the user.",
+].join(" ");
 
 function parseArgs(argv) {
   const options = {
@@ -89,25 +97,41 @@ function publicThreadRef(threadId) {
 }
 
 function validateCorpus(corpus) {
-  if (!Array.isArray(corpus.cases) || corpus.cases.length < 12) {
-    throw new Error("Corpus must contain at least 12 cases");
+  if (!Array.isArray(corpus.cases) || corpus.cases.length < 20) {
+    throw new Error("Corpus must contain at least 20 cases");
   }
   const ids = new Set();
+  const modeCounts = Object.fromEntries([...TASK_MODES].map((mode) => [mode, 0]));
   for (const testCase of corpus.cases) {
     if (!testCase.id || ids.has(testCase.id)) throw new Error(`Missing or duplicate case id: ${testCase.id}`);
     ids.add(testCase.id);
+    if (!TASK_MODES.has(testCase.taskMode)) throw new Error(`Unknown task mode for ${testCase.id}`);
+    modeCounts[testCase.taskMode] += 1;
     if (!SIZE_RANGES[testCase.sizeTier]) throw new Error(`Unknown size tier for ${testCase.id}`);
-    if (!testCase.category || !testCase.title || !testCase.prompt) {
+    if (!testCase.category || !testCase.title || !testCase.prompt || !testCase.outputConstraint) {
       throw new Error(`Incomplete metadata for ${testCase.id}`);
     }
     const [minimum, maximum] = SIZE_RANGES[testCase.sizeTier];
-    if (!Number.isInteger(testCase.sourceWordCount)
-      || testCase.sourceWordCount < minimum
-      || testCase.sourceWordCount > maximum) {
+    if (!Array.isArray(testCase.targetWordRange)
+      || testCase.targetWordRange.length !== 2
+      || !testCase.targetWordRange.every(Number.isInteger)
+      || testCase.targetWordRange[0] > testCase.targetWordRange[1]
+      || testCase.targetWordRange[0] < minimum
+      || testCase.targetWordRange[1] > maximum) {
       throw new Error(
-        `${testCase.id} declares ${testCase.sourceWordCount} source words outside ${testCase.sizeTier} range ${minimum}-${maximum}`,
+        `${testCase.id} target range must stay inside ${testCase.sizeTier} range ${minimum}-${maximum}`,
       );
     }
+    const shouldStartFromDraft = testCase.taskMode === "rewrite" || testCase.taskMode === "review";
+    if (testCase.startsFromDraft !== shouldStartFromDraft) {
+      throw new Error(`startsFromDraft does not match task mode for ${testCase.id}`);
+    }
+  }
+  if (modeCounts.create < 10) {
+    throw new Error("Corpus must contain at least 10 create-from-scratch cases");
+  }
+  for (const mode of TASK_MODES) {
+    if (modeCounts[mode] < 3) throw new Error(`Corpus must contain at least 3 ${mode} cases`);
   }
 }
 
@@ -350,6 +374,20 @@ async function startClient(options, environment) {
       "shell_tool",
       "--disable",
       "apps",
+      "--disable",
+      "multi_agent",
+      "--disable",
+      "browser_use",
+      "--disable",
+      "computer_use",
+      "--disable",
+      "image_generation",
+      "--disable",
+      "in_app_browser",
+      "--disable",
+      "goals",
+      "--disable",
+      "workspace_dependencies",
       "-c",
       `model=\"${options.model}\"`,
       "-c",
@@ -387,6 +425,7 @@ async function startThread(client, options, environment) {
     approvalPolicy: "never",
     sandbox: "read-only",
     serviceName: "addictive-writing-manual-comparison",
+    developerInstructions: SHARED_DEVELOPER_INSTRUCTIONS,
   });
   if (result.model !== options.model) {
     throw new Error(`Thread model mismatch: requested ${options.model}, got ${result.model}`);
@@ -461,6 +500,63 @@ async function main() {
     }
 
     const cases = [];
+    const runId = `pairs-${startedAt.replace(/[-:.TZ]/g, "").slice(0, 14)}-${sha256(skillText + corpusText).slice(0, 8)}`;
+    const makeResult = (status) => ({
+      schemaVersion: 2,
+      status,
+      method: "raw-side-by-side-manual-comparison",
+      runId,
+      startedAt,
+      completedAt: status === "complete" ? new Date().toISOString() : null,
+      configuration: {
+        requestedModel: options.model,
+        requestedEffort: options.effort,
+        verifiedModel: modelInfo.id,
+        verifiedDisplayName: modelInfo.displayName,
+        codexVersion: execFileSync("codex", ["--version"], { encoding: "utf8" }).trim(),
+        appServerUserAgent: started.initialized.userAgent,
+        nodeVersion: process.version,
+        platform: platform(),
+      },
+      controls: {
+        visiblePrompt: "byte-identical between conditions",
+        withoutSkill: "text input only",
+        withSkill: "same text input plus one explicit skill input item",
+        addedSkillMarkerInText: false,
+        sharedDeveloperInstructions: SHARED_DEVELOPER_INSTRUCTIONS,
+        sharedDeveloperInstructionsSha256: sha256(SHARED_DEVELOPER_INSTRUCTIONS),
+        freshThreadPerOutput: true,
+        conditionOrder: "alternated by case",
+        retries: 0,
+        judgmentsOrScores: false,
+        disabledCapabilities: [
+          "shell",
+          "apps",
+          "web",
+          "multi-agent",
+          "browser",
+          "computer-use",
+          "image-generation",
+          "goals",
+          "workspace-dependencies",
+        ],
+        checkpointAfterEachPair: true,
+        modelReroute: "abort",
+      },
+      hashes: {
+        skillSha256: sha256(skillText),
+        corpusSha256: sha256(corpusText),
+        runnerSha256: sha256(runnerText),
+      },
+      cases,
+    });
+    await mkdir(dirname(options.out), { recursive: true });
+    const writeResult = async (status) => {
+      const temporaryOutput = `${options.out}.tmp`;
+      await writeFile(temporaryOutput, `${JSON.stringify(makeResult(status), null, 2)}\n`, "utf8");
+      await rename(temporaryOutput, options.out);
+    };
+
     for (const testCase of selectedCases) {
       const corpusIndex = corpus.cases.findIndex((item) => item.id === testCase.id);
       const conditionOrder = corpusIndex % 2 === 0
@@ -482,46 +578,10 @@ async function main() {
         withoutSkill: pair.withoutSkill,
         withSkill: pair.withSkill,
       });
+      await writeResult("in_progress");
     }
 
-    const result = {
-      schemaVersion: 1,
-      method: "raw-side-by-side-manual-comparison",
-      runId: `pairs-${startedAt.replace(/[-:.TZ]/g, "").slice(0, 14)}-${sha256(skillText + corpusText).slice(0, 8)}`,
-      startedAt,
-      completedAt: new Date().toISOString(),
-      configuration: {
-        requestedModel: options.model,
-        requestedEffort: options.effort,
-        verifiedModel: modelInfo.id,
-        verifiedDisplayName: modelInfo.displayName,
-        codexVersion: execFileSync("codex", ["--version"], { encoding: "utf8" }).trim(),
-        appServerUserAgent: started.initialized.userAgent,
-        nodeVersion: process.version,
-        platform: platform(),
-      },
-      controls: {
-        visiblePrompt: "byte-identical between conditions",
-        withoutSkill: "text input only",
-        withSkill: "same text input plus one explicit skill input item",
-        addedSkillMarkerInText: false,
-        freshThreadPerOutput: true,
-        conditionOrder: "alternated by case",
-        retries: 0,
-        judgmentsOrScores: false,
-        shellAppsAndWeb: "disabled",
-        modelReroute: "abort",
-      },
-      hashes: {
-        skillSha256: sha256(skillText),
-        corpusSha256: sha256(corpusText),
-        runnerSha256: sha256(runnerText),
-      },
-      cases,
-    };
-
-    await mkdir(dirname(options.out), { recursive: true });
-    await writeFile(options.out, `${JSON.stringify(result, null, 2)}\n`, "utf8");
+    await writeResult("complete");
     process.stderr.write(`[done] wrote ${options.out}\n`);
   } finally {
     if (client) await client.close();

@@ -22,7 +22,8 @@ function escapeHtml(value) {
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+    .replaceAll('"', "&quot;")
+    .replace(/ +(?=\n|$)/g, (spaces) => "&#32;".repeat(spaces.length));
 }
 
 function details(summary, text) {
@@ -30,8 +31,14 @@ function details(summary, text) {
 }
 
 function render(result) {
+  const modeCounts = result.cases.reduce((counts, testCase) => {
+    counts[testCase.taskMode] = (counts[testCase.taskMode] ?? 0) + 1;
+    return counts;
+  }, {});
   const lines = [
-    "# Manual side-by-side comparison",
+    "# Raw side-by-side comparison",
+    "",
+    "For actual reviewing, use the [blind browser workspace](https://addictive-writing-review.marcogworms.chatgpt.site). This file is the archival fallback.",
     "",
     "Every row shows the raw output from two fresh threads. The visible user prompt is byte-identical in both conditions. The only difference is that the **With skill** condition also receives the `addictive-writing` skill input.",
     "",
@@ -40,6 +47,7 @@ function render(result) {
     `- Model: \`${result.configuration.verifiedModel}\``,
     `- Reasoning effort: \`${result.configuration.requestedEffort}\``,
     `- Cases: ${result.cases.length}`,
+    `- Task modes: ${Object.entries(modeCounts).map(([mode, count]) => `${count} ${mode}`).join(" · ")}`,
     `- Skill SHA-256: \`${result.hashes.skillSha256}\``,
     `- Corpus SHA-256: \`${result.hashes.corpusSha256}\``,
     `- Generated: ${result.completedAt}`,
@@ -48,6 +56,7 @@ function render(result) {
     "<thead>",
     "<tr>",
     "<th># / case</th>",
+    "<th>Task mode</th>",
     "<th>Size</th>",
     "<th>Category</th>",
     "<th>Exact prompt</th>",
@@ -64,7 +73,8 @@ function render(result) {
     lines.push(
       "<tr>",
       `<td><strong>${index + 1}. ${escapeHtml(testCase.title)}</strong><br><code>${escapeHtml(testCase.id)}</code></td>`,
-      `<td>${escapeHtml(testCase.sizeTier.replaceAll("_", " "))}<br>${testCase.sourceWordCount} source words</td>`,
+      `<td><strong>${escapeHtml(testCase.taskMode)}</strong><br>${testCase.startsFromDraft ? "starts from supplied text" : "starts from a brief"}</td>`,
+      `<td>${escapeHtml(testCase.sizeTier.replaceAll("_", " "))}<br>${testCase.targetWordRange[0]}–${testCase.targetWordRange[1]} target words</td>`,
       `<td>${escapeHtml(testCase.category.replaceAll("_", " "))}</td>`,
       `<td>${details(`Show prompt · ${testCase.promptWordCount} words · ${testCase.promptSha256.slice(0, 12)}`, testCase.prompt)}</td>`,
       `<td>${details(`Show output · ${testCase.withoutSkill.outputWordCount} words`, testCase.withoutSkill.output)}</td>`,
@@ -87,4 +97,5 @@ function render(result) {
 
 const options = parseArgs(process.argv.slice(2));
 const result = JSON.parse(await readFile(options.input, "utf8"));
+if (result.status !== "complete") throw new Error("Refusing to render an incomplete comparison run");
 await writeFile(options.output, `${render(result)}\n`, "utf8");
